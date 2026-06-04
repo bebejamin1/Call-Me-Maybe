@@ -144,6 +144,7 @@ Le squelette à savoir coder **et** expliquer :
 
 
 Je comprend
+sdk -> software development kit (Kit de développement logiciel)
 
 llm predit du texte
 
@@ -151,9 +152,20 @@ llm predit du texte
 Hugging Face
 [Hugging face page](https://huggingface.co/spaces?filter=reachy_mini)
 github pour les IA permet de chopper plein de model deja entrainer
+[IA used for project](https://huggingface.co/Qwen/Qwen3-0.6B)
 
+transformers
+il sait comment les couches de neurones sont organisées
+il sait Comment tokeniser le texte avec le bon tokenizer du modèle
+
+PyTorch
+bibliotheque de calcul mathematique sur des matrices
 import torch
 remplace numpy pour utiliser la puissance des GPU
 [torch doc](https://www.python-simple.com/python-torch/torch-intro.php)
 [torch doc complete](https://pypi.org/project/torch/)
 
+
+L'analogie en une phrase
+torch = le moteur et les roues (la mécanique de calcul).
+transformers = la voiture complète, conçue pour un modèle précis, posée sur ce moteur.
