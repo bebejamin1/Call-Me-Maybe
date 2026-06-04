@@ -141,3 +141,8 @@ Le squelette à savoir coder **et** expliquer :
 - [ ] **Difficultés rencontrées**
 - [ ] **Stratégie de test**
 - [ ] **Exemples d'usage**
+
+
+Je comprend
+
+llm predit du texte
