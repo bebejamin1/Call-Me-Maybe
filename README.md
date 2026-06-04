@@ -12,5 +12,5 @@ import Enum
 ```
 ```
 Savoir expliquer pourquoi c'est utile (interagir avec des APIs, exécuter du code, extraire des données structurées de texte brut)
-
+Comprendre comment un LLM génère du texte token par token
 ```
