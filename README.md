@@ -146,3 +146,14 @@ Le squelette à savoir coder **et** expliquer :
 Je comprend
 
 llm predit du texte
+
+
+Hugging Face
+[Hugging face page](https://huggingface.co/spaces?filter=reachy_mini)
+github pour les IA permet de chopper plein de model deja entrainer
+
+import torch
+remplace numpy pour utiliser la puissance des GPU
+[torch doc](https://www.python-simple.com/python-torch/torch-intro.php)
+[torch doc complete](https://pypi.org/project/torch/)
+
