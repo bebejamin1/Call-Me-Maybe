@@ -144,6 +144,32 @@ Le squelette à savoir coder **et** expliquer :
 
 
 Je comprend
+
+llm -> une machine qui predit le mot suivant -> le token suivant
+
+token -> decoupage de mot pour mieux comprendre
+lettre par lettre trop lent, mot entier vocabulaire trop grand et inconnus
+donc token sous lalgorithme BPE byte pair Encoding
+chaque token a un ID unique (numero unique)
+
+logits -> score 
+```
+token 90 ("{")   : 8.3   ← score élevé, très probable
+token 14990      : 0.1
+token 279        : -2.4  ← score bas, peu probable
+```
+
+comment on choisi le token ?
+Greedy on prend le token au score le plus eleve pour le projet
+et Sampling (avec tempereaure) on tire aleatoirement un score plus ou moins avec
+des delta pour sage ou creatif.
+
+
+
+![génération autorégressive](image.png)
+
+float16 pr GPU vs float32 pr CPU
+
 sdk -> software development kit (Kit de développement logiciel)
 
 llm predit du texte
@@ -169,3 +195,15 @@ remplace numpy pour utiliser la puissance des GPU
 L'analogie en une phrase
 torch = le moteur et les roues (la mécanique de calcul).
 transformers = la voiture complète, conçue pour un modèle précis, posée sur ce moteur.
+
+
+
+```bash
+User: "What is the sum of 40 and 2?"
+Traditional LLM: "The sum of 40 and 2 is 42."
+Function Calling System:
+{
+"function": "add_numbers",
+"arguments": {"a": 40, "b": 2}
+}
+```
