@@ -11,7 +11,7 @@
 #                                                                             #
 # ########################################################################### #
 
-from llm_sdk.llm_sdk import Small_LLM_Model
+from llm_sdk import Small_LLM_Model
 import numpy as np
 
 
@@ -23,7 +23,7 @@ def main() -> None:
     input: str = "quel est la couleur du ciel ?"
 
     tok = llm.encode(input)
-    token = np.array(tok)
+    token = np.array(tok.cpu())
 
     logits = llm.decode(token)
     print(logits)

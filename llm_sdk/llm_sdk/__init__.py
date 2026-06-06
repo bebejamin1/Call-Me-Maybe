@@ -83,7 +83,7 @@ class Small_LLM_Model:
         """Tokenise *text* and return a 2-D ``input_ids`` tensor on the target
         device.
         """
-        ids = self._tokenizer.encode(text, add_special_tokens=False)
+        ids: list[int] = self._tokenizer.encode(text, add_special_tokens=False)
         return torch.tensor([ids], device=self._device, dtype=torch.long)
 
     def decode(self, ids: torch.Tensor | list[int]) -> str:
