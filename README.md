@@ -164,6 +164,9 @@ Greedy on prend le token au score le plus eleve pour le projet
 et Sampling (avec tempereaure) on tire aleatoirement un score plus ou moins avec
 des delta pour sage ou creatif.
 
+les transformers 
+
+
 
 
 ![génération autorégressive](image.png)
