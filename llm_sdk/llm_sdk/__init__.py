@@ -1,11 +1,13 @@
 # ABOUTME: LLM SDK for local model inference using Hugging Face transformers.
-# ABOUTME: Provides Small_LLM_Model class for loading and running causal language models.
+# ABOUTME: Provides Small_LLM_Model class for loading and running causal
+# language models.
 
 import time
 from typing import Tuple
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedTokenizer, PreTrainedModel, logging
+from transformers import AutoModelForCausalLM, AutoTokenizer,\
+    PreTrainedTokenizer, PreTrainedModel, logging
 from huggingface_hub import hf_hub_download
 import os
 

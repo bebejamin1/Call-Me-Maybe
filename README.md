@@ -145,14 +145,16 @@ Le squelette à savoir coder **et** expliquer :
 
 Je comprend
 
+
+
 llm -> une machine qui predit le mot suivant -> le token suivant
 
-token -> decoupage de mot pour mieux comprendre
+token -> decoupage de mot pour mieux comprendre -> produit des vecteur
 lettre par lettre trop lent, mot entier vocabulaire trop grand et inconnus
 donc token sous lalgorithme BPE byte pair Encoding
 chaque token a un ID unique (numero unique)
 
-logits -> score 
+logits -> score
 ```
 token 90 ("{")   : 8.3   ← score élevé, très probable
 token 14990      : 0.1
@@ -164,7 +166,11 @@ Greedy on prend le token au score le plus eleve pour le projet
 et Sampling (avec tempereaure) on tire aleatoirement un score plus ou moins avec
 des delta pour sage ou creatif.
 
-les transformers 
+structure en couche
+
+les transformers
+l'ATTENTION, regarde ke contexte de la phrase
+feedforward -> paterne linguistique
 
 
 
