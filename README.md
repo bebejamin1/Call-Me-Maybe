@@ -145,7 +145,7 @@ Le squelette à savoir coder **et** expliquer :
 
 Je comprend
 
-
+JSON (JavaScript Object Notation)
 
 llm -> une machine qui predit le mot suivant -> le token suivant
 
