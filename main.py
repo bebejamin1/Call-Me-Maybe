@@ -7,11 +7,13 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/08 16:41:51 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/09 15:59:57 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import numpy as np
+
+from src.parsing import parser
 
 g = "\033[32m\033[1m\033[1m"
 rp = "\033[31m"
@@ -33,9 +35,15 @@ except (ImportError, NameError):
 # Capital of France is -> Paris
 
 def main() -> None:
+
+    prompt_file = "function_calling_tests.json"
+    function_file = "functions_definition.json"
+
+    parser(prompt_file, function_file)
+
     llm = Small_LLM_Model()
 
-    text: str = "/"
+    text: str = "Benjamin Beaurain est"
     max_new_tokens: int = 100
 
     ids = llm.encode(text)
@@ -55,6 +63,9 @@ def main() -> None:
 
     except KeyboardInterrupt:
         print("Termined minish")
+
+    except RuntimeError as e:
+         print(f"{r}[ERROR]{rs}: {e}")
 
 
 if __name__ == "__main__":
