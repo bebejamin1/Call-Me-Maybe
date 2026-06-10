@@ -7,15 +7,12 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/09 15:56:38 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/10 11:45:54 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import json
 import os
-
-# verif bon format, permission, si le dossier existe
-# number, string, boolean, etc.
 
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
@@ -24,11 +21,11 @@ r = "\033[31m\033[5m\033[1m"
 # *                              PROMPT                                       *
 # *                                                                           *
 
+
 def prompt_file_checker(prompt_file: str) -> bool:
     try:
 
-        with open(os.path.join(f"data/input/{prompt_file}"),
-                               "r") as f:
+        with open(os.path.join(f"data/input/{prompt_file}"), "r") as f:
             prompts = json.load(f)
             for p in prompts:
 
@@ -36,9 +33,14 @@ def prompt_file_checker(prompt_file: str) -> bool:
                     raise ValueError(f"prompt ({p}) is not in the "
                                      "correct format")
 
-    except (FileNotFoundError, json.decoder.JSONDecodeError,
+    except (json.decoder.JSONDecodeError,
             IndexError, PermissionError, RuntimeError) as e:
         print(f"{r}[ERROR]{rs}: {e}")
+        exit()
+
+    except FileNotFoundError:
+        print(f"{r}[ERROR]{rs}: Please create the following folders:" + "\n"
+              f"data/input/{prompt_file}")
         exit()
 
     except ValueError as e:
@@ -60,19 +62,47 @@ def prompt_file_checker(prompt_file: str) -> bool:
 # *                             FUNCTION                                      *
 # *                                                                           *
 
+
 def function_file_checker(function_file: str) -> bool:
+    args = ["name", "description"]
+    types = ["string", "number", "integer", "boolean", ]
+
     try:
 
-        with open(os.path.join(f"data/input/{function_file}"),
-                               "r") as f:
-            prompts = json.load(f)
-            for p in prompts:
+        with open(os.path.join(f"data/input/{function_file}"), "r") as f:
+            functions = json.load(f)
+            for fun in functions:
 
-                pass
+                for a in args:
+                    if not (isinstance(fun[a], str) and len(fun[a]) > 0):
+                        raise ValueError(f"in {fun[a]} The argument is not a "
+                                         "string or is empty")
 
-    except (FileNotFoundError, json.decoder.JSONDecodeError,
+                for v in fun["parameters"].values():
+
+                    for k, t in v.items():
+                        if (k != "type"):
+                            raise ValueError("Parameters must be of a "
+                                             f"specific type \"{k}\": \"{t}\"")
+
+                    if (v["type"] not in types):
+                        raise ValueError("Function parameters must be "
+                                         "prototyped as follows: " + "\n"
+                                         f"{v}")
+
+                    for k, v in fun["returns"].items():
+                        if (k != "type" or v not in types):
+                            raise ValueError("The return is incorrect" + "\n"
+                                             f"{fun["returns"]}")
+
+    except (json.decoder.JSONDecodeError,
             IndexError, PermissionError, RuntimeError) as e:
         print(f"{r}[ERROR]{rs}: {e}")
+        exit()
+
+    except FileNotFoundError:
+        print(f"{r}[ERROR]{rs}: Please create the following folders:" + "\n"
+              f"data/input/{function_file}")
         exit()
 
     except ValueError as e:
@@ -80,11 +110,12 @@ def function_file_checker(function_file: str) -> bool:
         exit()
 
     except KeyError:
-        print(f"{r}[ERROR]{rs}: You must specify exactly “prompt”")
+        print(f"{r}[ERROR]{rs}: Syntax error with the following function: "
+              f"{fun["name"]}")
         exit()
 
     except TypeError:
-        print(f"{r}[ERROR]{rs}: The “function_calling_tests.json” file does "
+        print(f"{r}[ERROR]{rs}: The “functions_definition.json” file does "
               "not contain a list of dictionaries")
         exit()
 
@@ -93,6 +124,7 @@ def function_file_checker(function_file: str) -> bool:
 # *****************************************************************************
 # *                              PARSER                                       *
 # *                                                                           *
+
 
 def parser(pf: str, ff: str) -> bool:
 

@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/09 15:59:57 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/10 11:50:00 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -27,12 +27,10 @@ try:
     from llm_sdk import Small_LLM_Model
 
 except (ImportError, NameError):
-        print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
-              "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
-        exit()
+    print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
+          "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
+    exit()
 
-# The sky is -> blue
-# Capital of France is -> Paris
 
 def main() -> None:
 
@@ -65,7 +63,7 @@ def main() -> None:
         print("Termined minish")
 
     except RuntimeError as e:
-         print(f"{r}[ERROR]{rs}: {e}")
+        print(f"{r}[ERROR]{rs}: {e}")
 
 
 if __name__ == "__main__":
