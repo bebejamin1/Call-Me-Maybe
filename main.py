@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/10 11:50:00 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/10 12:04:09 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -22,15 +22,6 @@ be = "\033[38;5;67m"
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
-try:
-
-    from llm_sdk import Small_LLM_Model
-
-except (ImportError, NameError):
-    print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
-          "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
-    exit()
-
 
 def main() -> None:
 
@@ -39,15 +30,18 @@ def main() -> None:
 
     parser(prompt_file, function_file)
 
-    llm = Small_LLM_Model()
+    text: str = "Fleur"
 
-    text: str = "Benjamin Beaurain est"
     max_new_tokens: int = 100
 
-    ids = llm.encode(text)
-    token_ids = ids[0].tolist()
-
     try:
+
+        from llm_sdk import Small_LLM_Model
+
+        llm = Small_LLM_Model()
+
+        ids = llm.encode(text)
+        token_ids = ids[0].tolist()
 
         for _ in range(max_new_tokens):
             logits = llm.get_logits_from_input_ids(token_ids)
@@ -64,6 +58,11 @@ def main() -> None:
 
     except RuntimeError as e:
         print(f"{r}[ERROR]{rs}: {e}")
+
+    except (ImportError, NameError):
+        print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
+              "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
+    exit()
 
 
 if __name__ == "__main__":
