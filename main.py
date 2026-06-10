@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/10 12:04:09 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/10 17:12:16 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -27,6 +27,7 @@ def main() -> None:
 
     prompt_file = "function_calling_tests.json"
     function_file = "functions_definition.json"
+    output_file = "function_calling_results.json"  # noqa
 
     parser(prompt_file, function_file)
 

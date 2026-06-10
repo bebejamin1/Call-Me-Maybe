@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/10 11:45:54 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/10 16:58:23 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -26,16 +26,23 @@ def prompt_file_checker(prompt_file: str) -> bool:
     try:
 
         with open(os.path.join(f"data/input/{prompt_file}"), "r") as f:
+
             prompts = json.load(f)
+            if (len(prompts) == 0):
+                raise ValueError("The JSON file does not contain any prompts")
+
             for p in prompts:
 
                 if (len(p["prompt"]) <= 0):
                     raise ValueError(f"prompt ({p}) is not in the "
                                      "correct format")
 
-    except (json.decoder.JSONDecodeError,
-            IndexError, PermissionError, RuntimeError) as e:
+    except (IndexError, PermissionError, RuntimeError) as e:
         print(f"{r}[ERROR]{rs}: {e}")
+        exit()
+
+    except json.decoder.JSONDecodeError:
+        print(f"{r}[ERROR]{rs}: The {prompt_file} file is empty")
         exit()
 
     except FileNotFoundError:
@@ -65,12 +72,18 @@ def prompt_file_checker(prompt_file: str) -> bool:
 
 def function_file_checker(function_file: str) -> bool:
     args = ["name", "description"]
-    types = ["string", "number", "integer", "boolean", ]
+    types = ["string", "number", "integer", "boolean", "array",
+             "object", "null"]
 
     try:
 
         with open(os.path.join(f"data/input/{function_file}"), "r") as f:
+
             functions = json.load(f)
+            if (len(functions) == 0):
+                raise ValueError("The JSON file does not contain any "
+                                 "functions")
+
             for fun in functions:
 
                 for a in args:
@@ -95,9 +108,12 @@ def function_file_checker(function_file: str) -> bool:
                             raise ValueError("The return is incorrect" + "\n"
                                              f"{fun["returns"]}")
 
-    except (json.decoder.JSONDecodeError,
-            IndexError, PermissionError, RuntimeError) as e:
+    except (IndexError, PermissionError, RuntimeError) as e:
         print(f"{r}[ERROR]{rs}: {e}")
+        exit()
+
+    except json.decoder.JSONDecodeError:
+        print(f"{r}[ERROR]{rs}: The {function_file} file is empty")
         exit()
 
     except FileNotFoundError:
@@ -110,12 +126,11 @@ def function_file_checker(function_file: str) -> bool:
         exit()
 
     except KeyError:
-        print(f"{r}[ERROR]{rs}: Syntax error with the following function: "
-              f"{fun["name"]}")
+        print(f"{r}[ERROR]{rs}: You must specify exactly “prompt”")
         exit()
 
     except TypeError:
-        print(f"{r}[ERROR]{rs}: The “functions_definition.json” file does "
+        print(f"{r}[ERROR]{rs}: The “function_calling_tests.json” file does "
               "not contain a list of dictionaries")
         exit()
 
