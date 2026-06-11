@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 14:18:25 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/11 15:57:07 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -15,11 +15,8 @@ import numpy as np  # noqa
 
 from src.parsing import parser
 from src.function import FunctionDef
+from src.llm import speak_llm
 
-g = "\033[32m\033[1m\033[1m"
-rp = "\033[31m"
-bn = "\033[0;33m"
-be = "\033[38;5;67m"
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
@@ -31,36 +28,17 @@ def main() -> None:
     output_file = "function_calling_results.json"  # noqa
 
     list_file = parser(prompt_file, function_file)
-
     func_list = []
 
-    # text: str = "Fleur"
-
-    # max_new_tokens: int = 100
-
     try:
-
-        # from llm_sdk import Small_LLM_Model
-
-        # llm = Small_LLM_Model()
-
-        # ids = llm.encode(text)
-        # token_ids = ids[0].tolist()
 
         for func in list_file[1]:
             func_list.append(FunctionDef.f_create(func))
 
-        print(func_list)
+        print(func_list[0].show_llm())
+        print(list_file[1][0])
 
-        # for _ in range(max_new_tokens):
-        #     logits = llm.get_logits_from_input_ids(token_ids)
-        #     next_id = int(np.argmax(logits))
-        #     token_ids.append(next_id)
-        #     answer = llm.decode(token_ids)
-
-        #     print("\033[H\033[2J", end="", flush=True)
-        #     print(answer)
-        #     print(f"Token: ({_})")
+        speak_llm()
 
     except KeyboardInterrupt:
         print("Termined minish")
@@ -68,10 +46,10 @@ def main() -> None:
     except RuntimeError as e:
         print(f"{r}[ERROR]{rs}: {e}")
 
-    except (ImportError, NameError):
-        print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
-              "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
-    exit()
+    except AttributeError:
+        print(f"{r}[ERROR]{rs}: An issue has been detected in the JSON "
+              "function definitions")
+        exit()
 
 
 if __name__ == "__main__":
