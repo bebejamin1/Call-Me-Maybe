@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 15:57:07 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/11 16:47:51 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -33,10 +33,10 @@ def main() -> None:
     try:
 
         for func in list_file[1]:
-            func_list.append(FunctionDef.f_create(func))
+            func_list.append(FunctionDef.f_create(func).show_function())
 
-        print(func_list[0].show_llm())
-        print(list_file[1][0])
+        for f in func_list:
+            print(f + "\n")
 
         speak_llm()
 

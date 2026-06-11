@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 15:44:45 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/11 16:44:08 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -50,7 +50,7 @@ class FunctionDef(BaseModel):
             print(f"{r}[ERROR]{rs}: {e}")
             exit()
 
-    def show_llm(self) -> str:
+    def show_function(self) -> str:
 
         return (
             f"name: {self.name}" + "\n"
