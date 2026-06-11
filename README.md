@@ -216,3 +216,18 @@ Function Calling System:
 "arguments": {"a": 40, "b": 2}
 }
 ```
+
+
+Machine etat vraiment utile pk ?
+convertir le json en class et avoir une liste de toutes les fonction en class
+cree une fonction qui renvoie vrai faux en comparant un prompt et une description
+si faux pour tout renvoie un message generique
+si vrai utilise la fonction pour completer les parametre
+preremplir le max de la sorti json et demander a lia de completer les arguments
+
+
+prompt de base tu est une ia blablalbal
+tu donne liste des fonction
+
+
+je peux dire a lia combien de parametre on attend et les type 

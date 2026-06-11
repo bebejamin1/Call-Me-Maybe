@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/10 16:58:23 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/11 09:22:35 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -42,7 +42,7 @@ def prompt_file_checker(prompt_file: str) -> bool:
         exit()
 
     except json.decoder.JSONDecodeError:
-        print(f"{r}[ERROR]{rs}: The {prompt_file} file is empty")
+        print(f"{r}[ERROR]{rs}: The {prompt_file} file is empty or misspelled")
         exit()
 
     except FileNotFoundError:
@@ -113,7 +113,8 @@ def function_file_checker(function_file: str) -> bool:
         exit()
 
     except json.decoder.JSONDecodeError:
-        print(f"{r}[ERROR]{rs}: The {function_file} file is empty")
+        print(f"{r}[ERROR]{rs}: The {function_file} file is empty "
+              "or misspelled")
         exit()
 
     except FileNotFoundError:
