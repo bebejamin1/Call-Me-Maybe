@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 09:22:35 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/11 11:55:37 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -37,6 +37,8 @@ def prompt_file_checker(prompt_file: str) -> bool:
                     raise ValueError(f"prompt ({p}) is not in the "
                                      "correct format")
 
+            return (prompts)
+
     except (IndexError, PermissionError, RuntimeError) as e:
         print(f"{r}[ERROR]{rs}: {e}")
         exit()
@@ -63,14 +65,12 @@ def prompt_file_checker(prompt_file: str) -> bool:
               "not contain a list of dictionaries")
         exit()
 
-    return (True)
-
 # *****************************************************************************
 # *                             FUNCTION                                      *
 # *                                                                           *
 
 
-def function_file_checker(function_file: str) -> bool:
+def function_file_checker(function_file: str) -> list[dict]:
     args = ["name", "description"]
     types = ["string", "number", "integer", "boolean", "array",
              "object", "null"]
@@ -108,6 +108,8 @@ def function_file_checker(function_file: str) -> bool:
                             raise ValueError("The return is incorrect" + "\n"
                                              f"{fun["returns"]}")
 
+            return (functions)
+
     except (IndexError, PermissionError, RuntimeError) as e:
         print(f"{r}[ERROR]{rs}: {e}")
         exit()
@@ -135,19 +137,11 @@ def function_file_checker(function_file: str) -> bool:
               "not contain a list of dictionaries")
         exit()
 
-    return (True)
-
 # *****************************************************************************
 # *                              PARSER                                       *
 # *                                                                           *
 
 
-def parser(pf: str, ff: str) -> bool:
+def parser(pf: str, ff: str) -> list[list]:
 
-    prompt_file = pf
-    function_file = ff
-
-    if (prompt_file_checker(prompt_file) and
-            function_file_checker(function_file)):
-        return (True)
-    return (False)
+    return [prompt_file_checker(pf), function_file_checker(ff)]

@@ -7,13 +7,14 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/10 17:12:16 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/11 14:18:25 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-import numpy as np
+import numpy as np  # noqa
 
 from src.parsing import parser
+from src.function import FunctionDef
 
 g = "\033[32m\033[1m\033[1m"
 rp = "\033[31m"
@@ -29,30 +30,37 @@ def main() -> None:
     function_file = "functions_definition.json"
     output_file = "function_calling_results.json"  # noqa
 
-    parser(prompt_file, function_file)
+    list_file = parser(prompt_file, function_file)
 
-    text: str = "Fleur"
+    func_list = []
 
-    max_new_tokens: int = 100
+    # text: str = "Fleur"
+
+    # max_new_tokens: int = 100
 
     try:
 
-        from llm_sdk import Small_LLM_Model
+        # from llm_sdk import Small_LLM_Model
 
-        llm = Small_LLM_Model()
+        # llm = Small_LLM_Model()
 
-        ids = llm.encode(text)
-        token_ids = ids[0].tolist()
+        # ids = llm.encode(text)
+        # token_ids = ids[0].tolist()
 
-        for _ in range(max_new_tokens):
-            logits = llm.get_logits_from_input_ids(token_ids)
-            next_id = int(np.argmax(logits))
-            token_ids.append(next_id)
-            answer = llm.decode(token_ids)
+        for func in list_file[1]:
+            func_list.append(FunctionDef.f_create(func))
 
-            print("\033[H\033[2J", end="", flush=True)
-            print(answer)
-            print(f"Token: ({_})")
+        print(func_list)
+
+        # for _ in range(max_new_tokens):
+        #     logits = llm.get_logits_from_input_ids(token_ids)
+        #     next_id = int(np.argmax(logits))
+        #     token_ids.append(next_id)
+        #     answer = llm.decode(token_ids)
+
+        #     print("\033[H\033[2J", end="", flush=True)
+        #     print(answer)
+        #     print(f"Token: ({_})")
 
     except KeyboardInterrupt:
         print("Termined minish")

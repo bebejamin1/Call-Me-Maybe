@@ -230,4 +230,13 @@ prompt de base tu est une ia blablalbal
 tu donne liste des fonction
 
 
-je peux dire a lia combien de parametre on attend et les type 
+je peux dire a lia combien de parametre on attend et les type
+
+ma solution est meilleur pck moins couteuse en token ca fait moin de bruit
+
+
+```
+{'name': 'fn_add_numbers', 'description': '...', 'parameters': {'a': {'type': 'number'}, 'b': {'type': 'number'}}, 'returns': {'type': 'number'}}
+
+Pour dire que a est de type number, le modèle doit traverser : {, 'a', :, {, 'type', :, 'number', } — 8 tokens pour une info qui tient en 2 (a: float). Le mot clé type ne porte aucun sens pour la sélection de fonction, c'est du bruit pur.
+```
