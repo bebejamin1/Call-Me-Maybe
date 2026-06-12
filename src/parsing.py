@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 14:13:09 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 17:24:23 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -160,5 +160,27 @@ def parser(pf: str, ff: str) -> list[list]:
 # *                           ANSWER PARSER                                   *
 # *                                                                           *
 
-def answer_parser() -> list[any]:
-    pass
+def answer_parser(answer: str) -> list:
+    list_answer = []
+    dict_param = {}
+    temp = []
+
+    answer = answer.split("@")
+    list_answer.append(answer[0])
+
+    for a in answer[1:]:
+        temp.append(a.split(":"))
+
+    for t in temp:
+        print(t)
+        try:
+
+            t[1] = float(t[1])
+            dict_param[t[0]] = t[1]
+
+        except ValueError:
+            dict_param[t[0]] = t[1]
+
+    list_answer.append(dict_param)
+
+    return (list_answer)

@@ -7,13 +7,13 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 14:08:02 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 17:17:02 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import numpy as np  # noqa
 
-from src.parsing import parser
+from src.parsing import parser, answer_parser
 from src.function import FunctionDef
 from src.llm import speak_llm
 from src.output import gen_output
@@ -44,12 +44,10 @@ def main() -> None:
             func_list += FunctionDef.f_create(func).show_function()
 
         for prompt in list_files[0]:
-            answer = speak_llm(func_list, prompt["prompt"])
+            answer = answer_parser(speak_llm(func_list, prompt["prompt"]))
             list_answer.append(answer)
 
-        gen_output(prompt["prompt"], answer, output_file)
-
-        print(*list_answer)
+        gen_output(list_files[0], list_answer, output_file)
 
     except KeyboardInterrupt:
         print("Termined minish")
