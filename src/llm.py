@@ -7,11 +7,15 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 10:57:36 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 11:15:25 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import numpy as np
+
+# -infinie et au delas
+# constrained decoding
+
 
 g = "\033[32m\033[1m\033[1m"
 rp = "\033[31m"
@@ -67,9 +71,8 @@ def speak_llm(function: str, prompt: str) -> str:
             if "\n" in answer:
                 break
             print("\033[H\033[2J", end="", flush=True)
-            print(answer)
 
-        print(answer.split("\n")[0].strip())
+        return (answer.split("\n")[0].strip())
 
     except (ImportError, NameError):
         print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"

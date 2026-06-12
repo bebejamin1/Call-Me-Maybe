@@ -7,13 +7,10 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/10 16:03:53 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/10 16:29:02 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 11:35:28 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-def gen_output(prompt: str, name: str, parameters: str) -> None:
-    pass
-
-
-def main():
-    gen_output("", "", "")
+def gen_output(prompt: str, answer: str) -> None:
+    print(prompt)
+    print(answer)

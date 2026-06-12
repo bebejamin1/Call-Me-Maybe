@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 10:44:54 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 11:32:56 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -16,6 +16,7 @@ import numpy as np  # noqa
 from src.parsing import parser
 from src.function import FunctionDef
 from src.llm import speak_llm
+from src.output import gen_output
 
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
@@ -34,11 +35,10 @@ def main() -> None:
 
         for func in list_files[1]:
             func_list += FunctionDef.f_create(func).show_function()
-            # func_list.append(FunctionDef.f_create(func).show_function())
 
-        # for prompt in list_files[0]:
-        prompt = list_files[0][0]["prompt"]
-        speak_llm(func_list, prompt)
+        for prompt in list_files[0]:
+            answer = speak_llm(func_list, prompt["prompt"])
+            gen_output(prompt["prompt"], answer)
 
     except KeyboardInterrupt:
         print("Termined minish")
