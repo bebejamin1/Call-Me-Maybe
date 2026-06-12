@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 11:32:56 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 14:08:02 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -26,19 +26,30 @@ def main() -> None:
 
     prompt_file = "function_calling_tests.json"
     function_file = "functions_definition.json"
-    output_file = "function_calling_results.json"  # noqa
+    output_file = "function_calling_results.json"
 
     list_files = parser(prompt_file, function_file)
     func_list = ""
+    list_answer = []
 
     try:
+
+        if not (prompt_file.endswith(".json")
+                and function_file.endswith(".json")
+                and output_file.endswith(".json")):
+            raise ValueError("One of the input/output files is not a "
+                             ".json file")
 
         for func in list_files[1]:
             func_list += FunctionDef.f_create(func).show_function()
 
         for prompt in list_files[0]:
             answer = speak_llm(func_list, prompt["prompt"])
-            gen_output(prompt["prompt"], answer)
+            list_answer.append(answer)
+
+        gen_output(prompt["prompt"], answer, output_file)
+
+        print(*list_answer)
 
     except KeyboardInterrupt:
         print("Termined minish")
@@ -50,6 +61,9 @@ def main() -> None:
         print(f"{r}[ERROR]{rs}: An issue has been detected in the JSON "
               "function definitions")
         exit()
+
+    except ValueError as e:
+        print(f"{r}[ERROR]{rs}: {e}")
 
 
 if __name__ == "__main__":

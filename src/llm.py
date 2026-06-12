@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 11:15:25 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 13:46:00 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -47,7 +47,7 @@ def speak_llm(function: str, prompt: str) -> str:
                    "function was found"
                    "Examples:" + "\n"
                    "Request: \"What is the sum of 2 and 3?\"" + "\n"
-                   "Response: fn_add_numbers a:2.0 b:3.0" + "\n"
+                   "Response: fn_add_numbers,a:2.0,b:3.0" + "\n"
                    "Request: \" fw'\"" + "\n"
                    "Response: no function was found" + "\n"
                    f"Request: \"{prompt}\"" + "\n"

@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 10:02:20 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 14:13:09 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -17,10 +17,10 @@ import os
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
+
 # *****************************************************************************
 # *                              PROMPT                                       *
 # *                                                                           *
-
 
 def prompt_file_checker(prompt_file: str) -> list[dict]:
     try:
@@ -65,10 +65,10 @@ def prompt_file_checker(prompt_file: str) -> list[dict]:
               "not contain a list of dictionaries")
         exit()
 
+
 # *****************************************************************************
 # *                             FUNCTION                                      *
 # *                                                                           *
-
 
 def function_file_checker(function_file: str) -> list[dict]:
     args = ["name", "description"]
@@ -146,11 +146,19 @@ def function_file_checker(function_file: str) -> list[dict]:
               "not contain a list of dictionaries")
         exit()
 
+
 # *****************************************************************************
 # *                              PARSER                                       *
 # *                                                                           *
 
-
 def parser(pf: str, ff: str) -> list[list]:
 
     return [prompt_file_checker(pf), function_file_checker(ff)]
+
+
+# *****************************************************************************
+# *                           ANSWER PARSER                                   *
+# *                                                                           *
+
+def answer_parser() -> list[any]:
+    pass

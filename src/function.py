@@ -7,13 +7,9 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 10:21:34 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 13:40:13 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
-
-# for param_name, param_def in func.parameters.items():
-#     # param_name = "a", param_def.type = "number"
-#     # → restreindre les tokens à des valeurs numériques
 
 from pydantic import BaseModel, Field
 
