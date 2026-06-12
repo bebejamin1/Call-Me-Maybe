@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 16:42:01 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 10:57:36 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -21,10 +21,33 @@ rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
 
-def speak_llm() -> None:
+def speak_llm(function: str, prompt: str) -> str:
 
-    prompt: str = "Fleur"
     max_new_tokens: int = 100
+    prompt: str = ("You are a function-selection system. Your only goal is to"
+                   " pick, from the available functions, the one that best "
+                   "matches the "
+                   "user's request, and to extract its arguments from that "
+                   "request." + "\n"
+                   "Here are the available functions. Each one is described by"
+                   " its name, its description, its parameters and their "
+                   "count:" + "\n"
+                   "\n" + f"{function}" + "\n"
+                   "For the user's request, you must:" + "\n"
+                   "- choose the name of the most appropriate function from "
+                   "the list above\n"
+                   "- fill in each parameter with the correct value extracted "
+                   "from the "
+                   "request, respecting its type " + "\n\n"
+                   "If there is no function that matches the prompt, no "
+                   "function was found"
+                   "Examples:" + "\n"
+                   "Request: \"What is the sum of 2 and 3?\"" + "\n"
+                   "Response: fn_add_numbers a:2.0 b:3.0" + "\n"
+                   "Request: \" fw'\"" + "\n"
+                   "Response: no function was found" + "\n"
+                   f"Request: \"{prompt}\"" + "\n"
+                   "Response:")
 
     try:
 
@@ -34,16 +57,19 @@ def speak_llm() -> None:
 
         ids = llm.encode(prompt)
         token_ids = ids[0].tolist()
+        prompt_len = len(token_ids)
 
         for _ in range(max_new_tokens):
             logits = llm.get_logits_from_input_ids(token_ids)
             next_id = int(np.argmax(logits))
             token_ids.append(next_id)
-            answer = llm.decode(token_ids)
-
+            answer = llm.decode(token_ids[prompt_len:])
+            if "\n" in answer:
+                break
             print("\033[H\033[2J", end="", flush=True)
             print(answer)
-            print(f"Token: ({_})")
+
+        print(answer.split("\n")[0].strip())
 
     except (ImportError, NameError):
         print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"

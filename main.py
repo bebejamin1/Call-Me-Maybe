@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 17:09:00 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 10:44:54 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -27,18 +27,18 @@ def main() -> None:
     function_file = "functions_definition.json"
     output_file = "function_calling_results.json"  # noqa
 
-    list_file = parser(prompt_file, function_file)
-    func_list = []
+    list_files = parser(prompt_file, function_file)
+    func_list = ""
 
     try:
 
-        for func in list_file[1]:
-            func_list.append(FunctionDef.f_create(func).show_function())
+        for func in list_files[1]:
+            func_list += FunctionDef.f_create(func).show_function()
+            # func_list.append(FunctionDef.f_create(func).show_function())
 
-        for f in func_list:
-            print(f + "\n")
-
-        speak_llm()
+        # for prompt in list_files[0]:
+        prompt = list_files[0][0]["prompt"]
+        speak_llm(func_list, prompt)
 
     except KeyboardInterrupt:
         print("Termined minish")
