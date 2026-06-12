@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 11:55:37 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 08:52:28 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -74,6 +74,10 @@ def function_file_checker(function_file: str) -> list[dict]:
     args = ["name", "description"]
     types = ["string", "number", "integer", "boolean", "array",
              "object", "null"]
+    valid_char = [
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "_"]
 
     try:
 
@@ -85,6 +89,11 @@ def function_file_checker(function_file: str) -> list[dict]:
                                  "functions")
 
             for fun in functions:
+
+                for n in fun["name"]:
+                    if (n not in valid_char):
+                        raise ValueError("Function names must be in "
+                                         "snake_case format")
 
                 for a in args:
                     if not (isinstance(fun[a], str) and len(fun[a]) > 0):

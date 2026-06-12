@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/11 16:44:08 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/12 08:53:56 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -23,7 +23,7 @@ r = "\033[31m\033[5m\033[1m"
 
 class FunctionDef(BaseModel):
 
-    name: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
+    name: str = Field(min_length=1, max_length=50)
     description: str = Field(min_length=1, max_length=512)
     parameters: list[str] = []
     returns: str | None = None
@@ -55,6 +55,6 @@ class FunctionDef(BaseModel):
         return (
             f"name: {self.name}" + "\n"
             f"description: {self.description}" + "\n"
-            f"parameters: {self.parameters}" + "\n"
+            f"parameters: {", ".join(self.parameters)}" + "\n"
             f"number of parameters {self.nb_para}"
                )
