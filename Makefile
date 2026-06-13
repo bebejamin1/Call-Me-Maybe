@@ -46,7 +46,7 @@ install : $(PYTHON) $(PROJECT_FILES) llm_sdk/pyproject.toml
 	spinner=$$!; \
 	trap 'kill $$spinner 2>/dev/null' EXIT INT TERM; \
 	{ \
-		$(UV) sync --python $(PYTHON) --locked && \
+		$(UV) sync --python $(PYTHON) && \
 		$(UV) pip install --python $(PYTHON) -q -e llm_sdk/; \
 	} >"$$log_file" 2>&1; \
 	status=$$?; \
