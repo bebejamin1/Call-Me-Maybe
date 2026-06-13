@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 12:35:48 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 13:48:32 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -116,11 +116,12 @@ def speak_llm(function: str, prompt: str, llm: Any) -> str:
             llm.get_logits_from_input_ids(token_ids),
             dtype=np.float64)
         next_id = int(np.argmax(logits))
+        logits[:] = -np.inf
+        logits[next_id] = 0.0
 
         token_ids.append(next_id)
         result = llm.decode(token_ids[prompt_len:])
         if "\n" in result:
             break
 
-    print(result.split("\n")[0].strip())
     return (result.split("\n")[0].strip())

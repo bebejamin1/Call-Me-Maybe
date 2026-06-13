@@ -117,7 +117,7 @@ dependencies = [
 requires-dist = [
     { name = "accelerate", specifier = ">=1.13.0" },
     { name = "flake8", specifier = ">=7.3.0" },
-    { name = "llm-sdk", directory = "/home/bbeaurai/Desktop/Code/GITHUB/Call-Me-Maybe/llm_sdk" },
+    { name = "llm-sdk", directory = "llm_sdk" },
     { name = "mypy", specifier = ">=2.1.0" },
     { name = "numpy", specifier = ">=1.24.0" },
     { name = "pydantic", specifier = ">=2.13.4" },
@@ -467,7 +467,7 @@ wheels = [
 [[package]]
 name = "llm-sdk"
 version = "0.1.0"
-source = { directory = "/home/bbeaurai/Desktop/Code/GITHUB/Call-Me-Maybe/llm_sdk" }
+source = { directory = "llm_sdk" }
 dependencies = [
     { name = "huggingface-hub" },
     { name = "torch" },
