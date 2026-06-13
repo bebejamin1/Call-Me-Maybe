@@ -44,10 +44,11 @@ def gen_json_file(prompt: str, answer: str, output_file: str) -> None:
                 "name": ans[0],
                 "parameters": ans[1]
                     })
-        if not (os.path.exists("data/output")):
-            os.mkdir(os.path.join("data/output"))
+        parent = os.path.dirname(output_file)
+        if parent:
+            os.makedirs(parent, exist_ok=True)
 
-        with open(os.path.join(f"data/output/{output_file}"), "w") as f:
+        with open(output_file, "w") as f:
             json.dump(list_output, f, indent=2)
 
     except ValueError as e:

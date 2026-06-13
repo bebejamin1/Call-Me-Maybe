@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 10:46:17 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 11:00:30 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -23,15 +23,17 @@ rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
 
-def main() -> None:
-
-    prompt_file = "function_calling_tests.json"
-    function_file = "functions_definition.json"
-    output_file = "function_calling_results.json"
+def main(
+    function_file: str = "data/input/functions_definition.json",
+    prompt_file: str = "data/input/function_calling_tests.json",
+    output_file: str = "data/output/function_calling_results.json",
+) -> None:
 
     list_files = parser(prompt_file, function_file)
     func_list = ""
     list_answer = []
+
+    start = 0
 
     try:
 

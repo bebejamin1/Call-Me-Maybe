@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 10:47:38 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 10:59:33 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -20,9 +20,10 @@ os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
 os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 os.environ["HF_HUB_VERBOSITY"] = "error"
 
-
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
+
+# constrained decoding
 
 
 def load_model() -> Any:

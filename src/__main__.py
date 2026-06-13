@@ -11,7 +11,16 @@
 #                                                                             #
 # ########################################################################### #
 
+import argparse
 from main import main
 
 if __name__ == "__main__":
-    main()
+    p = argparse.ArgumentParser()
+    p.add_argument("--functions_definition",
+                   default="data/input/functions_definition.json")
+    p.add_argument("--input",
+                   default="data/input/function_calling_tests.json")
+    p.add_argument("--output",
+                   default="data/output/function_calling_results.json")
+    args = p.parse_args()
+    main(args.functions_definition, args.input, args.output)

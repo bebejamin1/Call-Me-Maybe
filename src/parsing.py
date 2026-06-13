@@ -7,11 +7,10 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 09:51:15 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 11:12:11 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-import os
 import json
 
 rs = "\033[0m"
@@ -25,7 +24,7 @@ r = "\033[31m\033[5m\033[1m"
 def prompt_file_checker(prompt_file: str) -> list[dict]:
     try:
 
-        with open(os.path.join(f"data/input/{prompt_file}"), "r") as f:
+        with open(prompt_file, "r") as f:
 
             prompts = json.load(f)
             if (len(prompts) == 0):
@@ -48,8 +47,7 @@ def prompt_file_checker(prompt_file: str) -> list[dict]:
         exit()
 
     except FileNotFoundError:
-        print(f"{r}[ERROR]{rs}: Please create the following folders:" + "\n"
-              f"data/input/{prompt_file}")
+        print(f"{r}[ERROR]{rs}: File not found: {prompt_file}")
         exit()
 
     except ValueError as e:
@@ -81,7 +79,7 @@ def function_file_checker(function_file: str) -> list[dict]:
 
     try:
 
-        with open(os.path.join(f"data/input/{function_file}"), "r") as f:
+        with open(function_file, "r") as f:
 
             functions = json.load(f)
             if (len(functions) == 0):
@@ -132,8 +130,7 @@ def function_file_checker(function_file: str) -> list[dict]:
         exit()
 
     except FileNotFoundError:
-        print(f"{r}[ERROR]{rs}: Please create the following folders:" + "\n"
-              f"data/input/{function_file}")
+        print(f"{r}[ERROR]{rs}: File not found: {function_file}")
         exit()
 
     except ValueError as e:

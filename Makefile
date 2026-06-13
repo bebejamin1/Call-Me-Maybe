@@ -65,10 +65,10 @@ run : install
 	@echo ""
 	@echo "$(GREEN)LAUNCH IN PROGRESS...$(NC)"
 	clear
-	@$(UV) run --python $(PYTHON) main.py
+	@$(UV) run --python $(PYTHON) python -m src
 
 debug : install
-	@$(UV) run --python $(PYTHON) python -m pdb main.py
+	@$(UV) run --python $(PYTHON) python -m pdb -m src
 
 lint : install
 	@echo ""
