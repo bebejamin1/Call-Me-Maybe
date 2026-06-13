@@ -11,5 +11,8 @@ dependencies = [
 	"numpy>=1.24.0",
 	"pydantic>=2.13.4",
 	"typing-extensions>=4.15.0",
-	"llm-sdk @ file:///home/bbeaurai/Desktop/Code/GITHUB/Call-Me-Maybe/llm_sdk",
+	"llm-sdk",
 ]
+
+[tool.uv.sources]
+llm-sdk = { path = "llm_sdk" }
