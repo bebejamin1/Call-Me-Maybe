@@ -7,12 +7,12 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 17:24:23 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 08:24:24 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-import json
 import os
+import json
 
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
@@ -89,6 +89,9 @@ def function_file_checker(function_file: str) -> list[dict]:
                                  "functions")
 
             for fun in functions:
+
+                if not (fun["name"].startswith("fn_")):
+                    raise ValueError("Function names must begin with fn_")
 
                 for n in fun["name"]:
                     if (n not in valid_char):
@@ -172,14 +175,13 @@ def answer_parser(answer: str) -> list:
         temp.append(a.split(":"))
 
     for t in temp:
-        print(t)
         try:
-
-            t[1] = float(t[1])
-            dict_param[t[0]] = t[1]
-
+            dict_param[t[0]] = int(t[1])
         except ValueError:
-            dict_param[t[0]] = t[1]
+            try:
+                dict_param[t[0]] = float(t[1])
+            except ValueError:
+                dict_param[t[0]] = t[1]
 
     list_answer.append(dict_param)
 

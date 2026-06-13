@@ -7,12 +7,12 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/10 16:03:53 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 17:05:37 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 09:18:24 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import os
-import json  # noqa
+import json
 
 g = "\033[32m\033[1m\033[1m"
 rp = "\033[31m"
@@ -23,7 +23,16 @@ r = "\033[31m\033[5m\033[1m"
 
 
 def gen_display(prompt: str, answer: str) -> None:
-    pass
+
+    if (isinstance(prompt, list)):
+        return (None)
+
+    print("\n" + "".center(79, "="))
+    print(f" {prompt} ".center(79, "="))
+
+    print("\n" + f"{answer[0]}")
+    for k, v in answer[1].items():
+        print(f"{k}: {v}")
 
 
 def gen_json_file(prompt: str, answer: str, output_file: str) -> None:
@@ -50,4 +59,3 @@ def gen_json_file(prompt: str, answer: str, output_file: str) -> None:
 def gen_output(prompt: str, answer: list, output_file: str) -> None:
 
     gen_json_file(prompt, answer, output_file)
-    gen_display(prompt, answer)

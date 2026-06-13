@@ -241,8 +241,3 @@ ma solution est meilleur pck moins couteuse en token ca fait moin de bruit
 Pour dire que a est de type number, le modèle doit traverser : {, 'a', :, {, 'type', :, 'number', } — 8 tokens pour une info qui tient en 2 (a: float). Le mot clé type ne porte aucun sens pour la sélection de fonction, c'est du bruit pur.
 ```
 
-si output nexiste pas il crash
-les fonction doivent commencer par fn
-
-
- Check that constrained decoding is implemented (not just prompting)

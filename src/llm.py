@@ -7,14 +7,17 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 17:24:10 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 08:13:01 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
+import os
 import numpy as np
 
-# -infinie et au delas
-# constrained decoding
+os.environ["TRANSFORMERS_VERBOSITY"] = "error"
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
+os.environ["HF_HUB_VERBOSITY"] = "error"
 
 
 g = "\033[32m\033[1m\033[1m"
@@ -42,10 +45,15 @@ def speak_llm(function: str, prompt: str) -> str:
                    "the list above\n"
                    "- fill in each parameter with the correct value extracted "
                    "from the "
-                   "request, respecting its type " + "\n\n"
+                   "request, respecting its type " + "\n"
+                   "- You must use the correct names for the "
+                   "function arguments, "
+                   "If the argument is “a” put “a”; if it's “n,” "
+                   "put “n”; and so on." + "\n\n"
                    "If there is no function that matches the prompt, no "
                    "function was found"
                    "Examples:" + "\n"
+                   "function_name@arg1:value1@arg2:value2" + "\n"
                    "Request: \"What is the sum of 2 and 3?\"" + "\n"
                    "Response: fn_add_numbers@a:2.0@b:3.0" + "\n"
                    "Request: \" fw'\"" + "\n"
@@ -64,14 +72,17 @@ def speak_llm(function: str, prompt: str) -> str:
         prompt_len = len(token_ids)
 
         for _ in range(max_new_tokens):
-            logits = llm.get_logits_from_input_ids(token_ids)
+            logits = np.array(llm.get_logits_from_input_ids(token_ids),
+                              dtype=np.float64)
+            max_id = int(np.argmax(logits))
+            logits[:] = -np.inf
+            logits[max_id] = 0.0
             next_id = int(np.argmax(logits))
 
             token_ids.append(next_id)
             answer = llm.decode(token_ids[prompt_len:])
             if "\n" in answer:
                 break
-            print("\033[H\033[2J", end="", flush=True)
 
         return (answer.split("\n")[0].strip())
 
