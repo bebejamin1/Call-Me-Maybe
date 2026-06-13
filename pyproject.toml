@@ -1,0 +1,18 @@
+[project]
+name = "call-me-maybe"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+	"accelerate>=1.13.0",
+	"flake8>=7.3.0",
+	"mypy>=2.1.0",
+	"numpy>=1.24.0",
+	"pydantic>=2.13.4",
+	"typing-extensions>=4.15.0",
+	"llm-sdk",
+]
+
+[tool.uv.sources]
+llm-sdk = { path = "llm_sdk" }
