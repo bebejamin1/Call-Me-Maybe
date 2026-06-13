@@ -7,12 +7,12 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 10:00:25 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 10:46:17 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-import numpy as np  # noqa
 import time
+import os
 
 from src.parsing import parser, answer_parser
 from src.function import FunctionDef
@@ -35,8 +35,6 @@ def main() -> None:
 
     try:
 
-        start = time.time()
-
         if not (prompt_file.endswith(".json")
                 and function_file.endswith(".json")
                 and output_file.endswith(".json")):
@@ -47,6 +45,10 @@ def main() -> None:
             func_list += FunctionDef.f_create(func).show_function()
 
         llm = load_model()
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        start = time.time()
 
         for prompt in list_files[0]:
             answer = answer_parser(speak_llm(func_list, prompt["prompt"], llm))
@@ -71,7 +73,11 @@ def main() -> None:
 
     finally:
         end = time.time()
-        print("\n" + f'Elapsed: {end - start:.2f} seconds' + "\n")
+        times = end - start
+        if (times > 60):
+            print("\n" + f'Elapsed: {times / 60:.2f} minutes' + "\n")
+        else:
+            print("\n" + f'Elapsed: {times:.2f} seconds' + "\n")
 
 
 if __name__ == "__main__":

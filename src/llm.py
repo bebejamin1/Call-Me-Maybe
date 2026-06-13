@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 10:17:56 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 10:47:38 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -21,10 +21,6 @@ os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 os.environ["HF_HUB_VERBOSITY"] = "error"
 
 
-g = "\033[32m\033[1m\033[1m"
-rp = "\033[31m"
-bn = "\033[0;33m"
-be = "\033[38;5;67m"
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
@@ -35,13 +31,14 @@ def load_model() -> Any:
         return Small_LLM_Model()
     except (ImportError, NameError):
         print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
-              "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
+              "\n" + "uv run main.py or make" + "\n")
         exit()
 
 
 def speak_llm(function: str, prompt: str, llm: Any) -> str:
 
     max_new_tokens: int = 100
+
     prompt: str = ("You are a function-selection system. Your only goal is to"
                    " pick, from the available functions, the one that best "
                    "matches the "

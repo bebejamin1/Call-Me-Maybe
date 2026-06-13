@@ -6,7 +6,7 @@
 #    By: bbeaurai <bbeaurai@student.42lehavre.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/04 13:42:06 by bbeaurai          #+#    #+#              #
-#    Updated: 2026/06/13 09:59:22 by bbeaurai         ###   ########.fr        #
+#    Updated: 2026/06/13 10:20:00 by bbeaurai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ $(PYTHON) :
 	@echo ""
 	@echo "$(YELLOW)VENV ACTIVATION$(NC)"
 	@$(UV) venv $(VENV)
-	clear
 
 install : $(PYTHON) $(PROJECT_FILES) llm_sdk/pyproject.toml
 	@echo ""
@@ -61,7 +60,6 @@ install : $(PYTHON) $(PROJECT_FILES) llm_sdk/pyproject.toml
 		exit $$status; \
 	fi; \
 	printf "\r$(GREEN)Checking dependencies... [OK]$(NC)\n"
-	clear
 
 run : install
 	@echo ""
