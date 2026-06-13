@@ -6,7 +6,7 @@
 #    By: bbeaurai <bbeaurai@student.42lehavre.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/04 13:42:06 by bbeaurai          #+#    #+#              #
-#    Updated: 2026/06/13 09:44:16 by bbeaurai         ###   ########.fr        #
+#    Updated: 2026/06/13 09:59:22 by bbeaurai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ NC = \033[0m
 all : run
 
 $(PYTHON) :
+	clear
 	@echo ""
 	@echo "$(YELLOW)VENV ACTIVATION$(NC)"
 	@$(UV) venv $(VENV)
@@ -47,7 +48,7 @@ install : $(PYTHON) $(PROJECT_FILES) llm_sdk/pyproject.toml
 	spinner=$$!; \
 	trap 'kill $$spinner 2>/dev/null' EXIT INT TERM; \
 	{ \
-		$(UV) sync --python $(PYTHON) --locked && \
+		$(UV) sync --python $(PYTHON) && \
 		$(UV) pip install --python $(PYTHON) -q -e llm_sdk/; \
 	} >"$$log_file" 2>&1; \
 	status=$$?; \

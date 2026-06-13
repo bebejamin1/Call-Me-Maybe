@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/10 16:03:53 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 09:50:39 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 10:05:49 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -28,11 +28,11 @@ def gen_display(prompt: str, answer: str) -> None:
         return (None)
 
     print("\n" + "".center(79, "="))
-    print(f" {prompt} ".center(79, "="))
+    print(f" {bn + prompt + rs} ".center(79 + len(rs + bn), "="))
 
-    print("\n" + f"{answer[0]}")
+    print("\n" + f"{be + answer[0] + rs}")
     for k, v in answer[1].items():
-        print(f"{k}: {v}")
+        print(f"{be}{k}: {v}{rs}")
 
 
 def gen_json_file(prompt: str, answer: str, output_file: str) -> None:

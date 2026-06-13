@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 09:04:39 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 10:00:25 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -54,7 +54,7 @@ def main() -> None:
         gen_output(list_files[0], list_answer, output_file)
 
     except KeyboardInterrupt:
-        print("Termined minish")
+        print("STOP STOPPING ME")
 
     except RuntimeError as e:
         print(f"{r}[ERROR]{rs}: {e}")
