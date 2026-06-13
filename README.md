@@ -84,23 +84,23 @@ The generation loop works as follows at each step:
 5. The token with the highest remaining logit is selected (greedy decoding).
 6. The selected token is appended and the loop repeats until the JSON object is complete.
 
-### Two-Phase Generation
+### Function Name Constraint via Trie
 
-The generation is split into two phases:
+Before generation starts, a trie of valid token sequences is built for every possible
+function name (plus `"no function was found"`). This is done by encoding each candidate
+name with the LLM's own tokenizer and recording the resulting token-ID paths.
 
-**Phase 1 — Function selection:** The LLM is prompted to pick the function name from
-the available list. The vocabulary file maps token IDs to their string representations,
-allowing the decoder to restrict valid tokens to exactly those that spell out one of the
-known function names.
+At each generation step during the function-name phase, only the token IDs that are
+valid continuations in the trie are kept; all others are masked to `-inf`. Once the
+trie path is exhausted (i.e. the full function name has been emitted), generation
+switches to unconstrained mode for the argument portion.
 
-**Phase 2 — Argument generation:** For each parameter defined in the function's schema,
-the decoder enforces the declared type:
-- `"number"` / `"integer"` → only tokens that form valid numeric literals are allowed
-- `"string"` → tokens forming valid JSON string content
-- `"boolean"` → restricted to `true` or `false`
+### Argument Extraction
 
-The vocabulary JSON file (obtained via `get_path_to_vocab_file()`) is loaded once at
-startup and used throughout to map token IDs to their string values.
+After generation, the raw LLM output (`fn_name@arg1:val1@arg2:val2`) is parsed by
+`answer_parser`. Values are cast to the correct Python types (`float`, `int`, or `str`)
+based on the function schema in `functions_definition.json`, ensuring the final JSON
+output always has the right types regardless of how the model formatted them.
 
 ---
 

@@ -7,15 +7,9 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 14:19:59 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 14:49:09 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
-
-
-"""
-Provides functions to parse and validate JSON files containing test prompts
-and function definitions with comprehensive error handling and type checking.
-"""
 
 import json
 from typing import Any, cast
@@ -29,24 +23,13 @@ r = "\033[31m\033[5m\033[1m"
 # *                                                                           *
 
 def prompt_file_checker(prompt_file: str) -> list[dict[str, str]]:
-    """
-    Validate and load test prompts from a JSON file.
-
-    Read and validate a JSON file containing a list of prompt dictionaries.
-    Each prompt must have a non-empty "prompt" key.
+    """Load and validate prompts from a JSON file.
 
     Args:
         prompt_file: Path to the JSON file containing prompts.
 
     Returns:
-        A list of dictionaries, each containing at least a "prompt" key.
-
-    Raises:
-        FileNotFoundError: If the prompt_file does not exist.
-        json.decoder.JSONDecodeError: If the file is empty or invalid JSON.
-        ValueError: If the file contains no prompts or has invalid format.
-        KeyError: If a prompt dictionary lacks the required "prompt" key.
-        TypeError: If the JSON does not contain a list of dictionaries.
+        List of validated prompt dictionaries.
     """
     try:
 
@@ -95,30 +78,15 @@ def prompt_file_checker(prompt_file: str) -> list[dict[str, str]]:
 # *                                                                           *
 
 def function_file_checker(function_file: str) -> list[dict[str, Any]]:
-    """
-    Validate and load function definitions from a JSON file.
-
-    Read and validate a JSON file containing function definitions.
-    Each function
-    must follow the schema: name starting with "fn_" in snake_case,
-    description,
-    parameters with type specifications, and returns with type.
+    """Load and validate function definitions from a JSON file.
 
     Args:
-        function_file: Path to the JSON file containing function definitions.
+        function_file: Path to the JSON file containing functions.
 
     Returns:
-        A list of validated function definition dictionaries.
-
-    Raises:
-        FileNotFoundError: If the function_file does not exist.
-        json.decoder.JSONDecodeError: If the file is empty or invalid JSON.
-        ValueError: If a function violates naming convention, type
-        specification,
-            or other validation rules.
-        KeyError: If a function dictionary lacks required fields.
-        TypeError: If the JSON does not contain a list of dictionaries.
+        List of validated function definition dictionaries.
     """
+
     args = ["name", "description"]
     types = ["string", "number", "integer", "boolean", "array",
              "object", "null"]
@@ -205,17 +173,14 @@ def parser(
         pf: str,
         ff: str
 ) -> list[list[dict[str, Any]]]:
-    """
-    Parse and validate both prompt and function definition files.
+    """Return [prompts, functions] loaded from pf and ff.
 
     Args:
         pf: Path to the prompt file.
         ff: Path to the function definitions file.
 
     Returns:
-        A list containing two elements:
-        - [0]: List of validated prompt dictionaries
-        - [1]: List of validated function definition dictionaries
+        List of [prompts, functions].
     """
     return [prompt_file_checker(pf), function_file_checker(ff)]
 
@@ -225,21 +190,14 @@ def parser(
 # *                                                                           *
 
 def answer_parser(answer: str, function: list[dict[Any, Any]]) -> list[Any]:
-    """
-    Parse the LLM response into function name and parameters dictionary.
-
-    Extract function name and parameter key-value pairs from the LLM response.
-    Attempt to convert parameter values to int, then float, then keep as
-    string.
+    """Parse 'fn_name@arg:val' LLM response into [name, params_dict].
 
     Args:
-        answer: The LLM-generated response string in format
-            "function_name@arg1:value1@arg2:value2".
+        answer: Raw LLM response string.
+        function: List of function definition dicts.
 
     Returns:
-        A list containing two elements:
-        - [0]: Function name (str)
-        - [1]: Dictionary mapping parameter names to their values
+        List of [function_name, params_dict].
     """
     list_answer: list[Any] = []
     dict_param: dict[str, Any] = {}
@@ -270,4 +228,4 @@ def answer_parser(answer: str, function: list[dict[Any, Any]]) -> list[Any]:
 
     list_answer.append(dict_param)
 
-    return list_answer
+    return (list_answer)

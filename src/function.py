@@ -7,16 +7,11 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 12:02:01 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 14:47:59 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-
-"""
-Defines the FunctionDef class that represents function metadata including
-name, description, parameters, and return types. Provides factory methods
-for creating instances from JSON function definitions.
-"""
+"""Pydantic model for function definitions loaded from JSON."""
 
 from pydantic import BaseModel, Field
 from typing import Any
@@ -26,15 +21,15 @@ r = "\033[31m\033[5m\033[1m"
 
 
 class FunctionDef(BaseModel):
-    """
-    Pydantic model representing a function definition.
+
+    """Validated representation of a function definition from JSON.
 
     Attributes:
-        name: Function name (1-50 characters), typically prefixed with "fn_".
-        description: Function description (1-512 characters).
-        parameters: List of parameter strings in "name: type" format.
-        returns: Return type as a string, or None.
-        nb_para: Number of parameters (must be positive).
+        name: Function name prefixed with fn_.
+        description: Human-readable description.
+        parameters: List of "param: type" strings.
+        returns: Return type string, or None.
+        nb_para: Number of parameters.
     """
 
     name: str = Field(min_length=1, max_length=50)
@@ -45,28 +40,14 @@ class FunctionDef(BaseModel):
 
     @classmethod
     def f_create(cls, function: dict[str, Any]) -> "FunctionDef":
-        """
-        Create a FunctionDef instance from a function dictionary.
 
-        Extract function information from a dictionary and construct a
-        FunctionDef.
-        Parameters are formatted as "name: type" strings from the input
-        dictionary.
+        """Build a FunctionDef from a raw function definition dictionary.
 
         Args:
-            function: Dictionary with keys "name", "description", "parameters",
-                and "returns". Parameters value must be a dict mapping
-                parameter
-                names to dicts with "type" keys.
+            function: Dict with name, description, parameters, returns.
 
         Returns:
             A new FunctionDef instance.
-
-        Raises:
-            ValueError: If validation fails on any field constraints.
-            KeyError: If required keys are missing from the function
-            dictionary.
-            SystemExit: If an error occurs.
         """
         try:
 
@@ -89,13 +70,12 @@ class FunctionDef(BaseModel):
             exit()
 
     def show_function(self) -> str:
-        """
-        Generate a formatted string representation of the function definition.
+        """Return a formatted string with name, description, and parameters.
 
         Returns:
-            String containing formatted name, description, parameters,
-            and count.
+            Multi-line string describing the function for LLM prompting.
         """
+
         return (
             f"name: {self.name}" + "\n"
             f"description: {self.description}" + "\n"

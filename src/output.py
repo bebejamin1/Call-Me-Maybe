@@ -7,15 +7,9 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/10 16:03:53 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 11:43:13 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 14:48:30 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
-
-
-"""
-Handles formatting and displaying function calling results, and generates
-JSON output files with the inference results.
-"""
 
 import os
 import json
@@ -28,16 +22,13 @@ r = "\033[31m\033[5m\033[1m"
 
 
 def gen_display(prompt: Any, answer: list[Any]) -> None:
-    """
-    Display the prompt and LLM response in formatted output.
-
-    Print the user's prompt and the parsed function name with its parameters
-    to stdout with color formatting. Skip output if prompt is a list.
+    """Print prompt and function call result to stdout.
 
     Args:
-        prompt: The user's request string (or list to skip output).
-        answer: A list containing [function_name_str, parameters_dict].
+        prompt: The user's request string.
+        answer: List of [function_name, params_dict].
     """
+
     if isinstance(prompt, list):
         return None
 
@@ -51,22 +42,14 @@ def gen_display(prompt: Any, answer: list[Any]) -> None:
 
 def gen_json_file(prompt: list[dict[str, Any]], answer: list[Any],
                   output_file: str) -> None:
-    """
-    Write results to a JSON output file.
-
-    Combine prompts and answers into a structured format and write to a JSON
-    file.
-    Create parent directories if needed.
+    """Write prompts and answers to a JSON file at output_file.
 
     Args:
-        prompt: List of prompt dictionaries, each with a "prompt" key.
-        answer: List of answer lists, each containing
-        [function_name, params_dict].
-        output_file: Path to the output JSON file.
-
-    Raises:
-        ValueError: If there is an error writing the JSON file.
+        prompt: List of prompt dicts with a "prompt" key.
+        answer: List of [function_name, params_dict].
+        output_file: Destination file path.
     """
+
     list_output: list[dict[str, Any]] = []
 
     try:
@@ -90,14 +73,12 @@ def gen_json_file(prompt: list[dict[str, Any]], answer: list[Any],
 
 def gen_output(prompt: list[dict[str, Any]], answer: list[Any],
                output_file: str) -> None:
-    """
-    Generate output file with function calling results.
-
-    Wrapper function that calls gen_json_file to write results.
+    """Write function calling results to output_file.
 
     Args:
-        prompt: List of prompt dictionaries.
-        answer: List of answer lists with function names and parameters.
-        output_file: Path to the output JSON file.
+        prompt: List of prompt dicts.
+        answer: List of [function_name, params_dict].
+        output_file: Destination file path.
     """
+
     gen_json_file(prompt, answer, output_file)
