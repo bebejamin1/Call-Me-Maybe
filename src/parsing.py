@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 14:49:09 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 15:21:14 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -202,30 +202,36 @@ def answer_parser(answer: str, function: list[dict[Any, Any]]) -> list[Any]:
     list_answer: list[Any] = []
     dict_param: dict[str, Any] = {}
 
-    answer_parts = answer.strip().split("@")
-    if not answer_parts:
-        return ["", {}]
+    try:
 
-    list_answer.append(answer_parts[0])
+        answer_parts = answer.strip().split("@")
+        if not answer_parts:
+            return ["", {}]
 
-    for a in answer_parts[1:]:
+        list_answer.append(answer_parts[0])
 
-        if ":" not in a:
-            continue
-        key, value = a.split(":", 1)
+        for a in answer_parts[1:]:
 
-        for func in function:
-            if (func["name"] == answer_parts[0]):
-                if (func["parameters"][key]["type"] == "number"):
-                    dict_param[key] = float(value)
-                elif (func["parameters"][key]["type"] == "integer"):
-                    dict_param[key] = int(value)
-                else:
-                    dict_param[key] = value.strip(" ").strip("\"")
+            if ":" not in a:
+                continue
+            key, value = a.split(":", 1)
 
-        if not key:
-            continue
+            for func in function:
+                if (func["name"] == answer_parts[0]):
+                    if (func["parameters"][key]["type"] == "number"):
+                        dict_param[key] = float(value)
+                    elif (func["parameters"][key]["type"] == "integer"):
+                        dict_param[key] = int(value)
+                    else:
+                        dict_param[key] = value.strip(" ").strip("\"")
 
-    list_answer.append(dict_param)
+            if not key:
+                continue
+
+        list_answer.append(dict_param)
+    except (KeyError, IndexError):
+        print("\n" + f"{r}[ERROR]{rs}: "
+              "Function parameters cannot contain an “@” or \":\"")
+        exit()
 
     return (list_answer)
