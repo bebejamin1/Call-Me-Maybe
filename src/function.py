@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 13:40:13 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 09:50:20 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -32,7 +32,7 @@ class FunctionDef(BaseModel):
 
             parameters = []
             for k, v in function.get("parameters").items():
-                parameters.append(f"{k}: {v["type"]}")
+                parameters.append(f"{k}: {v['type']}")
 
             return cls(
                 name=function["name"],
@@ -51,6 +51,6 @@ class FunctionDef(BaseModel):
         return (
             f"name: {self.name}" + "\n"
             f"description: {self.description}" + "\n"
-            f"parameters: {", ".join(self.parameters)}" + "\n"
+            f"parameters: {'', ''.join(self.parameters)}" + "\n"
             f"number of parameters {self.nb_para}" + "\n\n"
                )

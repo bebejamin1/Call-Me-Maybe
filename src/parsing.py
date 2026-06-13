@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 08:24:24 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 09:51:15 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -118,7 +118,7 @@ def function_file_checker(function_file: str) -> list[dict]:
                     for k, v in fun["returns"].items():
                         if (k != "type" or v not in types):
                             raise ValueError("The return is incorrect" + "\n"
-                                             f"{fun["returns"]}")
+                                             f"{fun['returns']}")
 
             return (functions)
 

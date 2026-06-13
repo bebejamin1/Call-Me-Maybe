@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/10 16:03:53 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 09:18:24 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 09:50:39 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -42,7 +42,7 @@ def gen_json_file(prompt: str, answer: str, output_file: str) -> None:
 
         for pro, ans in zip(prompt, answer):
             list_output.append({
-                "prompt": f"{pro["prompt"]}",
+                "prompt": f"{pro['prompt']}",
                 "name": ans[0],
                 "parameters": ans[1]
                     })
