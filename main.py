@@ -16,7 +16,7 @@ import time
 
 from src.parsing import parser, answer_parser
 from src.function import FunctionDef
-from src.llm import speak_llm
+from src.llm import speak_llm, load_model
 from src.output import gen_output, gen_display
 
 rs = "\033[0m"
@@ -46,8 +46,10 @@ def main() -> None:
         for func in list_files[1]:
             func_list += FunctionDef.f_create(func).show_function()
 
+        llm = load_model()
+
         for prompt in list_files[0]:
-            answer = answer_parser(speak_llm(func_list, prompt["prompt"]))
+            answer = answer_parser(speak_llm(func_list, prompt["prompt"], llm))
             gen_display(prompt["prompt"], answer)
             list_answer.append(answer)
 

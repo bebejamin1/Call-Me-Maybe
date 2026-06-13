@@ -7,12 +7,13 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 08:13:01 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 10:17:56 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import os
 import numpy as np
+from typing import Any
 
 os.environ["TRANSFORMERS_VERBOSITY"] = "error"
 os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
@@ -28,7 +29,17 @@ rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
 
-def speak_llm(function: str, prompt: str) -> str:
+def load_model() -> Any:
+    try:
+        from llm_sdk import Small_LLM_Model
+        return Small_LLM_Model()
+    except (ImportError, NameError):
+        print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
+              "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
+        exit()
+
+
+def speak_llm(function: str, prompt: str, llm: Any) -> str:
 
     max_new_tokens: int = 100
     prompt: str = ("You are a function-selection system. Your only goal is to"
@@ -61,32 +72,21 @@ def speak_llm(function: str, prompt: str) -> str:
                    f"Request: \"{prompt}\"" + "\n"
                    "Response:")
 
-    try:
+    ids = llm.encode(prompt)
+    token_ids = ids[0].tolist()
+    prompt_len = len(token_ids)
 
-        from llm_sdk import Small_LLM_Model
+    for _ in range(max_new_tokens):
+        logits = np.array(llm.get_logits_from_input_ids(token_ids),
+                          dtype=np.float64)
+        max_id = int(np.argmax(logits))
+        logits[:] = -np.inf
+        logits[max_id] = 0.0
+        next_id = int(np.argmax(logits))
 
-        llm = Small_LLM_Model()
+        token_ids.append(next_id)
+        answer = llm.decode(token_ids[prompt_len:])
+        if "\n" in answer:
+            break
 
-        ids = llm.encode(prompt)
-        token_ids = ids[0].tolist()
-        prompt_len = len(token_ids)
-
-        for _ in range(max_new_tokens):
-            logits = np.array(llm.get_logits_from_input_ids(token_ids),
-                              dtype=np.float64)
-            max_id = int(np.argmax(logits))
-            logits[:] = -np.inf
-            logits[max_id] = 0.0
-            next_id = int(np.argmax(logits))
-
-            token_ids.append(next_id)
-            answer = llm.decode(token_ids[prompt_len:])
-            if "\n" in answer:
-                break
-
-        return (answer.split("\n")[0].strip())
-
-    except (ImportError, NameError):
-        print("\n" + f"{r}[ERROR]{rs} You must run the code as follows:"
-              "\n" + f"{be}uv run main.py{rs} or {be}make{rs}" + "\n")
-        exit()
+    return (answer.split("\n")[0].strip())
