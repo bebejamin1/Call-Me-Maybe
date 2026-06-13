@@ -13,6 +13,7 @@
 UV = uv
 VENV = .venv
 PYTHON = $(VENV)/bin/python
+export UV_LINK_MODE = copy
 INSTALL_LOG = /tmp/callmemaybe-uv-install.log
 PROJECT_FILES = pyproject.toml uv.lock
 
