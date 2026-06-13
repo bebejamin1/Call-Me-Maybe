@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 11:43:18 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 12:35:48 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -29,8 +29,6 @@ os.environ["HF_HUB_VERBOSITY"] = "error"
 
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
-
-# constrained decoding
 
 
 def load_model() -> Any:
@@ -79,36 +77,36 @@ def speak_llm(function: str, prompt: str, llm: Any) -> str:
     """
     max_new_tokens: int = 100
 
-    system_prompt: str = (
-        "You are a function-selection system. Your only goal is to"
-        " pick, from the available functions, the one that best "
-        "matches the user's request, and to extract its arguments "
-        "from that request.\n"
-        "Here are the available functions. Each one is described by"
-        " its name, its description, its parameters and their "
-        "count:\n"
-        f"\n{function}\n"
-        "For the user's request, you must:\n"
-        "- choose the name of the most appropriate function from "
-        "the list above\n"
-        "- fill in each parameter with the correct value extracted "
-        "from the request, respecting its type\n"
-        "- You must use the correct names for the function "
-        "arguments, If the argument is a put a; if it is n, "
-        "put n; and so on.\n\n"
-        "If there is no function that matches the prompt, no "
-        "function was found"
-        "Examples:\n"
-        "function_name@arg1:value1@arg2:value2\n"
-        "Request: What is the sum of 2 and 3?\n"
-        "Response: fn_add_numbers@a:2.0@b:3.0\n"
-        "Request:  fw\n"
-        "Response: no function was found\n"
-        f"Request: {prompt}\n"
-        "Response:"
-    )
+    sp: str = ("You are a function-selection system. Your only goal is to"
+               " pick, from the available functions, the one that best "
+               "matches the "
+               "user's request, and to extract its arguments from that "
+               "request." + "\n"
+               "Here are the available functions. Each one is described by"
+               " its name, its description, its parameters and their "
+               "count:" + "\n"
+               "\n" + f"{function}" + "\n"
+               "For the user's request, you must:" + "\n"
+               "- choose the name of the most appropriate function from "
+               "the list above\n"
+               "- fill in each parameter with the correct value extracted "
+               "from the "
+               "request, respecting its type " + "\n\n"
+               "If there is no function that matches the prompt, no "
+               "function was found"
+               "You must use the correct function argument names: if the "
+               "argument is `a`, use `a`; if it's `n`, use `n`; if it's "
+               "`template`, use `template`, and so on." + "\n"
+               "Examples:" + "\n"
+               "function_name@arg1:value1@arg2:value2"
+               "Request: \"What is the sum of 2 and 3?\"" + "\n"
+               "Response: fn_add_numbers@a:2.0@b:3.0" + "\n"
+               "Request: \" fw'\"" + "\n"
+               "Response: no function was found" + "\n"
+               f"Request: \"{prompt}\"" + "\n"
+               "Response:")
 
-    ids = llm.encode(system_prompt)
+    ids = llm.encode(sp)
     token_ids = ids[0].tolist()
     prompt_len = len(token_ids)
 
@@ -117,9 +115,6 @@ def speak_llm(function: str, prompt: str, llm: Any) -> str:
         logits = np.array(
             llm.get_logits_from_input_ids(token_ids),
             dtype=np.float64)
-        max_id = int(np.argmax(logits))
-        logits[:] = -np.inf
-        logits[max_id] = 0.0
         next_id = int(np.argmax(logits))
 
         token_ids.append(next_id)
@@ -127,4 +122,5 @@ def speak_llm(function: str, prompt: str, llm: Any) -> str:
         if "\n" in result:
             break
 
-    return result.split("\n")[0].strip()
+    print(result.split("\n")[0].strip())
+    return (result.split("\n")[0].strip())

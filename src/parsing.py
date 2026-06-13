@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/05 09:58:26 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 11:43:10 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 12:38:38 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -224,7 +224,7 @@ def parser(
 # *                           ANSWER PARSER                                   *
 # *                                                                           *
 
-def answer_parser(answer: str) -> list[Any]:
+def answer_parser(answer: str, function: list[dict[Any, Any]]) -> list[Any]:
     """
     Parse the LLM response into function name and parameters dictionary.
 
@@ -243,22 +243,30 @@ def answer_parser(answer: str) -> list[Any]:
     """
     list_answer: list[Any] = []
     dict_param: dict[str, Any] = {}
-    temp: list[list[str]] = []
 
-    answer_parts = answer.split("@")
+    answer_parts = answer.strip().split("@")
+    if not answer_parts:
+        return ["", {}]
+
     list_answer.append(answer_parts[0])
 
     for a in answer_parts[1:]:
-        temp.append(a.split(":"))
 
-    for t in temp:
-        try:
-            dict_param[t[0]] = int(t[1])
-        except ValueError:
-            try:
-                dict_param[t[0]] = float(t[1])
-            except ValueError:
-                dict_param[t[0]] = t[1]
+        if ":" not in a:
+            continue
+        key, value = a.split(":", 1)
+
+        for func in function:
+            if (func["name"] == answer_parts[0]):
+                if (func["parameters"][key]["type"] == "number"):
+                    dict_param[key] = float(value)
+                elif (func["parameters"][key]["type"] == "integer"):
+                    dict_param[key] = int(value)
+                else:
+                    dict_param[key] = value.strip(" ").strip("\"")
+
+        if not key:
+            continue
 
     list_answer.append(dict_param)
 

@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 11:45:21 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 12:14:34 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -86,7 +86,7 @@ def main(
         for prompt_item in list_files[0]:
             user_prompt = prompt_item["prompt"]
             response = speak_llm(func_list, user_prompt, llm)
-            answer = answer_parser(response)
+            answer = answer_parser(response, list_files[1])
             gen_display(user_prompt, answer)
             list_answer.append(answer)
 

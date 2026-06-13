@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 11:43:21 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 12:02:01 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -99,6 +99,6 @@ class FunctionDef(BaseModel):
         return (
             f"name: {self.name}" + "\n"
             f"description: {self.description}" + "\n"
-            f"parameters: {'', ''.join(self.parameters)}" + "\n"
+            f"parameters: {', '.join(self.parameters)}" + "\n"
             f"number of parameters {self.nb_para}" + "\n\n"
                )
