@@ -7,12 +7,22 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/04 13:02:05 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 11:00:30 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 11:45:21 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
+
+"""
+This module orchestrates the workflow for function calling inference:
+- Loads function definitions and test prompts from JSON files
+- Processes each prompt through an LLM with constrained decoding
+- Extracts function names and parameters from LLM responses
+- Generates formatted output with results
+"""
+
 import time
 import os
+from typing import Any
 
 from src.parsing import parser, answer_parser
 from src.function import FunctionDef
@@ -28,12 +38,33 @@ def main(
     prompt_file: str = "data/input/function_calling_tests.json",
     output_file: str = "data/output/function_calling_results.json",
 ) -> None:
+    """
+    Execute the main workflow for function calling inference.
 
+    Load function definitions and test prompts from JSON files, process each
+    prompt
+    through an LLM to determine which function to call and extract its
+    arguments,
+    then generate an output JSON file with the results.
+
+    Args:
+        function_file: Path to JSON file containing function definitions.
+            Defaults to "data/input/functions_definition.json".
+        prompt_file: Path to JSON file containing test prompts.
+            Defaults to "data/input/function_calling_tests.json".
+        output_file: Path to JSON file where results will be written.
+            Defaults to "data/output/function_calling_results.json".
+
+    Raises:
+        ValueError: If input/output files do not have .json extension.
+        AttributeError: If JSON function definitions have invalid structure.
+        RuntimeError: If an unexpected runtime error occurs during processing.
+    """
     list_files = parser(prompt_file, function_file)
     func_list = ""
-    list_answer = []
+    list_answer: list[Any] = []
 
-    start = 0
+    start = time.time()
 
     try:
 
@@ -52,9 +83,11 @@ def main(
 
         start = time.time()
 
-        for prompt in list_files[0]:
-            answer = answer_parser(speak_llm(func_list, prompt["prompt"], llm))
-            gen_display(prompt["prompt"], answer)
+        for prompt_item in list_files[0]:
+            user_prompt = prompt_item["prompt"]
+            response = speak_llm(func_list, user_prompt, llm)
+            answer = answer_parser(response)
+            gen_display(user_prompt, answer)
             list_answer.append(answer)
 
         gen_output(list_files[0], list_answer, output_file)
@@ -75,11 +108,11 @@ def main(
 
     finally:
         end = time.time()
-        times = end - start
-        if (times > 60):
-            print("\n" + f'Elapsed: {times / 60:.2f} minutes' + "\n")
+        elapsed = end - start
+        if elapsed > 60:
+            print("\n" + f'Elapsed: {elapsed / 60:.2f} minutes' + "\n")
         else:
-            print("\n" + f'Elapsed: {times:.2f} seconds' + "\n")
+            print("\n" + f'Elapsed: {elapsed:.2f} seconds' + "\n")
 
 
 if __name__ == "__main__":

@@ -7,9 +7,15 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/12 15:59:56 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/12 16:00:31 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/13 11:43:24 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
+
+
+"""
+Provides argument parsing and entry point for running the function calling
+inference system with custom input/output file paths.
+"""
 
 import argparse
 from main import main
