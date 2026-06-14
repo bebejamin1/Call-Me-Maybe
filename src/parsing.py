@@ -222,6 +222,8 @@ def answer_parser(answer: str, function: list[dict[Any, Any]]) -> list[Any]:
                         dict_param[key] = float(value)
                     elif (func["parameters"][key]["type"] == "integer"):
                         dict_param[key] = int(value)
+                    elif (func["parameters"][key]["type"] == "boolean"):
+                        dict_param[key] = value.strip().lower() == "true"
                     else:
                         dict_param[key] = value.strip(" ").strip("\"")
 

@@ -36,7 +36,7 @@ class FunctionDef(BaseModel):
     description: str = Field(min_length=1, max_length=512)
     parameters: list[str] = []
     returns: str | None = None
-    nb_para: int = Field(gt=0)
+    nb_para: int = Field(ge=0)
 
     @classmethod
     def f_create(cls, function: dict[str, Any]) -> "FunctionDef":
