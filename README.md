@@ -264,7 +264,7 @@ uv run python -m src \
 - [Les LLM Expliqués (SIMPLEMENT) en 3min](https://www.youtube.com/watch?v=1RRHr3dFogQ&t=2s)
 - [Mais c'est quoi, un GPT ? Introduction visuelle aux Transformers | Deep learning, chapitre 5](https://www.youtube.com/watch?v=wjZofJX0v4M)
 - [Qwen3](https://huggingface.co/Qwen/Qwen3-0.6B)
-- Makefile - fcaval
+- Makefile - [fcaval](https://github.com/fcaval42/CallMeMaybe)
 
 ### AI Usage
 
