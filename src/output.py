@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/10 16:03:53 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 14:48:30 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/14 20:12:15 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -20,6 +20,10 @@ be = "\033[38;5;67m"
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
+
+# *****************************************************************************
+# *                         DISPLAY TERMINA                                   *
+# *                                                                           *
 
 def gen_display(prompt: Any, answer: list[Any]) -> None:
     """Print prompt and function call result to stdout.
@@ -39,6 +43,10 @@ def gen_display(prompt: Any, answer: list[Any]) -> None:
     for k, v in answer[1].items():
         print(f"{be}{k}: {v}{rs}")
 
+
+# *****************************************************************************
+# *                          JSON GENERATE                                    *
+# *                                                                           *
 
 def gen_json_file(prompt: list[dict[str, Any]], answer: list[Any],
                   output_file: str) -> None:
@@ -70,6 +78,10 @@ def gen_json_file(prompt: list[dict[str, Any]], answer: list[Any],
     except ValueError as e:
         print(f"{r}[ERROR]{rs}: {e}")
 
+
+# *****************************************************************************
+# *                           MAIN OUTPUT                                     *
+# *                                                                           *
 
 def gen_output(prompt: list[dict[str, Any]], answer: list[Any],
                output_file: str) -> None:

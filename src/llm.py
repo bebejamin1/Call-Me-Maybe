@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 15:47:04 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/14 08:56:59 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/14 20:14:16 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -28,6 +28,10 @@ r = "\033[31m\033[5m\033[1m"
 _BPE_MAP = str.maketrans({"Ġ": " ", "Ċ": "\n"})
 
 
+# *****************************************************************************
+# *                             LOAD LLM                                      *
+# *                                                                           *
+
 def load_model() -> Any:
     """Load and return a Small_LLM_Model instance.
 
@@ -42,6 +46,10 @@ def load_model() -> Any:
               "\n" + "uv run main.py or make" + "\n")
         sys.exit(1)
 
+
+# *****************************************************************************
+# *                    CONSTRAINE FUNCTION NAME                               *
+# *                                                                           *
 
 def _build_name_trie(
         sp: str, functions: list[dict[str, Any]], llm: Any) -> dict[int, Any]:
@@ -67,6 +75,10 @@ def _build_name_trie(
             node = node[tok]
     return trie
 
+
+# *****************************************************************************
+# *                        CONSTRAINE TYPE                                    *
+# *                                                                           *
 
 def _build_type_valid_tokens(
         vocab: dict[str, int], ptype: str) -> set[int]:
@@ -102,6 +114,10 @@ def _build_type_valid_tokens(
             valid.add(tok_id)
     return valid
 
+
+# *****************************************************************************
+# *                             MAIN LLM                                      *
+# *                                                                           *
 
 def speak_llm(function: str, prompt: str, llm: Any,
               functions: list[dict[str, Any]]) -> str:

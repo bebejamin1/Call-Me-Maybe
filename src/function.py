@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/11 09:07:49 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/06/13 14:47:59 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/06/14 20:14:40 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -19,6 +19,10 @@ from typing import Any
 rs = "\033[0m"
 r = "\033[31m\033[5m\033[1m"
 
+
+# *****************************************************************************
+# *                             FUNCTION                                      *
+# *                                                                           *
 
 class FunctionDef(BaseModel):
 
@@ -37,6 +41,8 @@ class FunctionDef(BaseModel):
     parameters: list[str] = []
     returns: str | None = None
     nb_para: int = Field(ge=0)
+
+# ============================== CREATE =======================================
 
     @classmethod
     def f_create(cls, function: dict[str, Any]) -> "FunctionDef":
@@ -68,6 +74,8 @@ class FunctionDef(BaseModel):
         except (ValueError, KeyError) as e:
             print(f"{r}[ERROR]{rs}: {e}")
             exit()
+
+# =============================== SHOW ========================================
 
     def show_function(self) -> str:
         """Return a formatted string with name, description, and parameters.
