@@ -2,6 +2,11 @@
 
 # Call Me Maybe — Introduction to Function Calling in LLMs
 
+## Preview
+
+<img width="800" height="459" alt="preview_cmm" src="https://github.com/user-attachments/assets/ea06df2d-36ff-48c3-806a-18317152528b" />
+
+
 ## Description
 
 **Call Me Maybe** is a function calling tool that translates natural language prompts
