@@ -259,19 +259,17 @@ uv run python -m src \
 
 ### References
 
-- [Attention Is All You Need — Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762)
-- [Outlines: Efficient Guided Generation (Brandon T. Willard, Rémi Louf)](https://arxiv.org/abs/2307.09702)
-- [Byte Pair Encoding — Sennrich et al. (2016)](https://arxiv.org/abs/1508.07909)
-- [Qwen3 Technical Report](https://arxiv.org/abs/2505.09388)
-- [JSON specification — ECMA-404](https://www.ecma-international.org/publications-and-standards/standards/ecma-404/)
-- [Pydantic documentation](https://docs.pydantic.dev/)
+- [Python JSON Data]([https://arxiv.org/abs/1706.03762](https://www.datacamp.com/tutorial/json-data-python?utm_cid=23781701478&utm_aid=196565213035&utm_campaign=260417_1-ps-dscia%7Eamx-tofu%7Epython_2-b2c_3-emea_4-prc_5-na_6-na_7-le_8-pdsh-go_9-nb-e_10-na_11-na&utm_loc=9056168-&utm_mtd=p-c&utm_kw=coding+best+practices+and+guidelines+python&utm_source=google&utm_medium=paid_search&utm_content=ps-dscia%7Eemea-en%7Eamx%7Etofu%7Etutorial%7Epython&gad_source=1&gad_campaignid=23781701478&gbraid=0AAAAADQ9WsHvH4LIXLO82mIHEieJvnSih&gclid=Cj0KCQjw0JnRBhDJARIsALobnXYg8KH0ofAAwg-MbIlYoWrCbO6lX8kXVBU3mulCod7sGhepZxtkWdUaAuWdEALw_wcB&dc_referrer=https%3A%2F%2Fwww.google.com%2F))
+- [Les modèles de langage en bref]([https://arxiv.org/abs/2307.09702](https://www.youtube.com/watch?v=LPZh9BOjkQs))
+- [Les LLM Expliqués (SIMPLEMENT) en 3min]([https://arxiv.org/abs/1508.07909](https://www.youtube.com/watch?v=1RRHr3dFogQ&t=2s))
+- [Mais c'est quoi, un GPT ? Introduction visuelle aux Transformers | Deep learning, chapitre 5]([https://www.ecma-international.org/publications-and-standards/standards/ecma-404/](https://www.youtube.com/watch?v=wjZofJX0v4M))
+- [Qwen3]([https://arxiv.org/abs/2505.09388](https://huggingface.co/Qwen/Qwen3-0.6B))
 
 ### AI Usage
 
 AI (Claude) was used in this project for the following tasks:
 
-- **Debugging:** identifying Python 3.10 compatibility issues with f-string syntax
-  and suggesting fixes.
+- **Tip** Whenever I had a decision to make or an idea, I would ask Claude if it was a good idea.
 - **Code review:** checking that the project structure matched the subject's
   requirements (CLI arguments, output format, error handling).
 - **README drafting:** the initial structure and phrasing of this document was
