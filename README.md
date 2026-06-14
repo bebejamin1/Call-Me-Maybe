@@ -71,18 +71,30 @@ All arguments are optional. Defaults:
 
 ## Algorithm Explanation
 
-### Constrained Decoding
+### Constrained Decoding — Two Phases
 
-The generation loop works as follows at each step:
+Generation is split into two distinct constrained phases:
+
+**Phase 1 — Function name selection**
 
 1. The current token sequence (prompt + generated tokens so far) is fed to the LLM.
 2. The model returns **logits** — a score for every token in the vocabulary (~150k tokens).
-3. The constrained decoder determines which tokens are **valid continuations** given:
-   - The current JSON structure state (e.g., inside a string value, expecting a number…)
-   - The schema of the function being generated (argument types from `functions_definition.json`)
-4. All **invalid tokens** have their logits set to `-inf`.
-5. The token with the highest remaining logit is selected (greedy decoding).
-6. The selected token is appended and the loop repeats until the JSON object is complete.
+3. Only tokens that are valid trie continuations for known function names are kept; all others are masked to `-inf`.
+4. The token with the highest remaining logit is selected (greedy decoding).
+5. Steps 1–4 repeat until the trie path is exhausted (i.e. the full function name has been emitted).
+
+**Phase 2 — Argument value generation**
+
+Once the function name is resolved, the system identifies the parameter types declared
+in `functions_definition.json` and constrains each value segment:
+
+1. The generated output so far is split on `@` to locate the current argument segment.
+2. If the cursor is inside a value (after the `:` separator), the valid token set for
+   the declared parameter type is looked up and all other tokens are masked to `-inf`.
+3. Delimiter tokens (`@`, newline) are always kept in the valid set so the model can
+   move to the next argument or terminate generation.
+4. Greedy decoding selects the best remaining token, and the loop repeats until a
+   newline is produced.
 
 ### Function Name Constraint via Trie
 
@@ -90,10 +102,25 @@ Before generation starts, a trie of valid token sequences is built for every pos
 function name (plus `"no function was found"`). This is done by encoding each candidate
 name with the LLM's own tokenizer and recording the resulting token-ID paths.
 
-At each generation step during the function-name phase, only the token IDs that are
-valid continuations in the trie are kept; all others are masked to `-inf`. Once the
-trie path is exhausted (i.e. the full function name has been emitted), generation
-switches to unconstrained mode for the argument portion.
+At each generation step during Phase 1, only the token IDs that are valid continuations
+in the trie are kept; all others are masked to `-inf`. Once the trie path is exhausted,
+generation enters Phase 2.
+
+### Type-Based Argument Value Constraint
+
+Before generation starts, the model's BPE vocabulary file is loaded and scanned once to
+build a set of valid token IDs for each supported parameter type:
+
+| Type | Allowed characters / tokens |
+|------|-----------------------------|
+| `number` | Any token whose characters are all in `0-9 . + - e E` |
+| `integer` | Any token whose characters are all in `0-9 -` |
+| `boolean` | Tokens that decode to `true`, `false`, `True`, or `False` |
+| `string` | All tokens (no character restriction) |
+
+These sets are pre-computed once per run. During Phase 2, the appropriate set is
+selected based on the current parameter's declared type, and all tokens outside that
+set (except delimiters) are masked to `-inf`.
 
 ### Argument Extraction
 
@@ -109,6 +136,14 @@ output always has the right types regardless of how the model formatted them.
 - **No external constrained-decoding libraries** (`outlines`, `lm-format-enforcer`, etc.)
   are used — the constraint logic is implemented from scratch using only `numpy` and
   the `llm_sdk` API, as required by the subject.
+- **Two-phase constraint strategy:** function names are constrained via a trie (exact
+  token-path matching); argument values are constrained via vocabulary scanning
+  (character-class filtering per parameter type). Each approach is optimal for its
+  phase: the trie handles a small closed set of multi-token names precisely, while
+  vocabulary scanning scales to any value content without enumerating all possibilities.
+- **Pre-computation at run start:** both the name trie and the type token sets are built
+  once before the generation loop, so per-token masking during inference is O(1) lookup
+  with no repeated work.
 - **Pydantic** is used for all data classes (`FunctionDef`) to validate function
   definitions at load time and catch malformed inputs early.
 - **Greedy decoding** is used rather than sampling: given the structural constraints
@@ -137,10 +172,12 @@ the model's probability distribution but a hard guarantee.
 
 ## Challenges Faced
 
-**Vocabulary mapping:** The Qwen3 tokenizer uses a BPE vocabulary where tokens can
-span multiple characters, include leading spaces, or represent partial words. Building
-a correct prefix-based token filter required careful handling of token boundaries to
-avoid rejecting valid continuations prematurely.
+**Vocabulary mapping and BPE decoding:** The Qwen3 tokenizer uses a BPE vocabulary
+where tokens can span multiple characters, include leading spaces (encoded as `Ġ`), or
+represent partial words. Building a correct type-based token filter required decoding
+each BPE token to its actual characters (via `_BPE_MAP`) before applying character-class
+checks, to avoid rejecting valid continuations or accepting tokens that only appear
+numeric at the BPE level.
 
 **Type enforcement for numbers:** Numeric tokens in BPE vocabularies are fragmented
 (e.g., `"12"`, `"3"`, `".4"` are separate tokens). The constraint logic must allow
