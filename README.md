@@ -24,6 +24,9 @@ its typed arguments:
 }
 ```
 
+<br>
+<img src="assets/pipeline.svg" alt="Pipeline — Prompt to Structured JSON" width="800"/>
+
 The key challenge is reliability: small models fail to produce valid JSON roughly 70%
 of the time when prompted naively. This project solves that using **constrained
 decoding** — a technique that restricts the model's token choices at each generation
@@ -80,6 +83,8 @@ All arguments are optional. Defaults:
 
 Generation is split into two distinct constrained phases:
 
+<img src="assets/constrained_decoding.svg" alt="Constrained Decoding — Phase 1 and Phase 2" width="800"/>
+
 **Phase 1 — Function name selection**
 
 1. The current token sequence (prompt + generated tokens so far) is fed to the LLM.
@@ -106,6 +111,8 @@ in `functions_definition.json` and constrains each value segment:
 Before generation starts, a trie of valid token sequences is built for every possible
 function name (plus `"no function was found"`). This is done by encoding each candidate
 name with the LLM's own tokenizer and recording the resulting token-ID paths.
+
+<img src="assets/trie.svg" alt="Function Name Trie — Token Paths" width="800"/>
 
 At each generation step during Phase 1, only the token IDs that are valid continuations
 in the trie are kept; all others are masked to `-inf`. Once the trie path is exhausted,

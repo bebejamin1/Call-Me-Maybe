@@ -1,0 +1,87 @@
+<svg width="800" height="290" viewBox="0 0 800 290" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect width="800" height="290" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#57606a" letter-spacing="1">FUNCTION NAME TRIE — TOKEN PATHS</text>
+
+  <!-- ROOT node -->
+  <rect x="340" y="35" width="120" height="32" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="400" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#24292f">START</text>
+
+  <!-- Line from ROOT down -->
+  <line x1="400" y1="67" x2="400" y2="87" stroke="#d0d7de" stroke-width="1.5"/>
+
+  <!-- fn_ node (shared prefix) -->
+  <rect x="340" y="87" width="120" height="32" rx="6" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+  <text x="400" y="108" text-anchor="middle" font-size="13" font-weight="700" fill="#0550ae" font-family="monospace">fn_</text>
+
+  <!-- "no function" branch from START -->
+  <line x1="340" y1="51" x2="100" y2="51"  stroke="#d0d7de" stroke-width="1.5"/>
+  <line x1="100" y1="51" x2="100" y2="87"  stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="30" y="87" width="140" height="32" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="100" y="107" text-anchor="middle" font-size="10.5" font-family="monospace" fill="#57606a">no function</text>
+
+  <!-- "was found" continuation -->
+  <line x1="100" y1="119" x2="100" y2="147" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="28" y="147" width="144" height="28" rx="6" fill="#fff8c5" stroke="#d4a72c" stroke-width="1"/>
+  <text x="100" y="166" text-anchor="middle" font-size="10" font-family="monospace" fill="#9a6700">was found</text>
+  <line x1="100" y1="175" x2="100" y2="195" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="20" y="195" width="160" height="28" rx="6" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="100" y="214" text-anchor="middle" font-size="9.5" font-family="monospace" fill="#116329">no function was found ✓</text>
+
+  <!-- Branches from fn_ -->
+  <!-- Compute 5 branch x-positions: 260, 360, 460, 560, 680 -->
+
+  <!-- Branch line: fn_ -> horizontal bar at y=155 -->
+  <line x1="400" y1="119" x2="400" y2="155" stroke="#0969da" stroke-width="1.5"/>
+  <!-- Horizontal span at y=155 from x=260 to x=700 -->
+  <line x1="260" y1="155" x2="700" y2="155" stroke="#0969da" stroke-width="1.5"/>
+
+  <!-- Branch 1: add_numbers at x=260 -->
+  <line x1="260" y1="155" x2="260" y2="177" stroke="#0969da" stroke-width="1.5"/>
+  <rect x="185" y="177" width="150" height="28" rx="6" fill="#f6f8fa" stroke="#0969da" stroke-width="1"/>
+  <text x="260" y="196" text-anchor="middle" font-size="11" font-family="monospace" fill="#0550ae">add_numbers</text>
+  <line x1="260" y1="205" x2="260" y2="225" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="175" y="225" width="170" height="28" rx="6" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="260" y="244" text-anchor="middle" font-size="9" font-family="monospace" fill="#116329">fn_add_numbers ✓</text>
+
+  <!-- Branch 2: greet at x=390 -->
+  <line x1="390" y1="155" x2="390" y2="177" stroke="#0969da" stroke-width="1.5"/>
+  <rect x="335" y="177" width="110" height="28" rx="6" fill="#f6f8fa" stroke="#0969da" stroke-width="1"/>
+  <text x="390" y="196" text-anchor="middle" font-size="11" font-family="monospace" fill="#0550ae">greet</text>
+  <line x1="390" y1="205" x2="390" y2="225" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="325" y="225" width="130" height="28" rx="6" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="390" y="244" text-anchor="middle" font-size="9" font-family="monospace" fill="#116329">fn_greet ✓</text>
+
+  <!-- Branch 3: reverse_string at x=510 -->
+  <line x1="510" y1="155" x2="510" y2="177" stroke="#0969da" stroke-width="1.5"/>
+  <rect x="432" y="177" width="156" height="28" rx="6" fill="#f6f8fa" stroke="#0969da" stroke-width="1"/>
+  <text x="510" y="196" text-anchor="middle" font-size="11" font-family="monospace" fill="#0550ae">reverse_string</text>
+  <line x1="510" y1="205" x2="510" y2="225" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="415" y="225" width="190" height="28" rx="6" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="510" y="244" text-anchor="middle" font-size="9" font-family="monospace" fill="#116329">fn_reverse_string ✓</text>
+
+  <!-- Branch 4: get_square_root at x=620 -->
+  <line x1="620" y1="155" x2="620" y2="177" stroke="#0969da" stroke-width="1.5"/>
+  <rect x="545" y="177" width="150" height="28" rx="6" fill="#f6f8fa" stroke="#0969da" stroke-width="1"/>
+  <text x="620" y="196" text-anchor="middle" font-size="11" font-family="monospace" fill="#0550ae">get_square_root</text>
+  <line x1="620" y1="205" x2="620" y2="225" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="540" y="225" width="160" height="28" rx="6" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="620" y="244" text-anchor="middle" font-size="9" font-family="monospace" fill="#116329">fn_get_square_root ✓</text>
+
+  <!-- Branch 5: substitute... at x=720 -->
+  <line x1="700" y1="155" x2="700" y2="177" stroke="#0969da" stroke-width="1.5"/>
+  <rect x="625" y="177" width="156" height="28" rx="6" fill="#f6f8fa" stroke="#0969da" stroke-width="1"/>
+  <text x="703" y="192" text-anchor="middle" font-size="9.5" font-family="monospace" fill="#0550ae">substitute_string</text>
+  <text x="703" y="204" text-anchor="middle" font-size="9.5" font-family="monospace" fill="#0550ae">_with_regex</text>
+  <line x1="703" y1="205" x2="703" y2="225" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect x="620" y="225" width="170" height="28" rx="6" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="705" y="240" text-anchor="middle" font-size="7.5" font-family="monospace" fill="#116329">fn_substitute_string_with_regex ✓</text>
+
+  <!-- Legend -->
+  <rect x="24" y="264" width="14" height="14" rx="3" fill="#ddf4ff" stroke="#0969da" stroke-width="1"/>
+  <text x="44" y="276" font-size="10" fill="#57606a">Token node in trie</text>
+  <rect x="160" y="264" width="14" height="14" rx="3" fill="#dafbe1" stroke="#1f883d" stroke-width="1"/>
+  <text x="180" y="276" font-size="10" fill="#57606a">Valid terminal (end of function name)</text>
+  <text x="400" y="276" font-size="10" fill="#8c959f" text-anchor="middle">Each path encodes the tokenizer's BPE split of the function name — only these paths are ever reachable during Phase 1</text>
+</svg>
