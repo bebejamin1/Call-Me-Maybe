@@ -25,7 +25,8 @@ its typed arguments:
 ```
 
 <br>
-<img src="assets/pipeline.svg" alt="Pipeline — Prompt to Structured JSON" width="800"/>
+<img width="2500" height="531" alt="pipeline" src="https://github.com/user-attachments/assets/bd950a5f-4943-44a9-9f2a-b2c53a3c5332" />
+
 
 The key challenge is reliability: small models fail to produce valid JSON roughly 70%
 of the time when prompted naively. This project solves that using **constrained
@@ -83,7 +84,7 @@ All arguments are optional. Defaults:
 
 Generation is split into two distinct constrained phases:
 
-<img src="assets/constrained_decoding.svg" alt="Constrained Decoding — Phase 1 and Phase 2" width="800"/>
+<img width="2500" height="969" alt="constrained_decoding" src="https://github.com/user-attachments/assets/cec1c3cd-6be2-4752-9bcb-c948d01938d7" />
 
 **Phase 1 — Function name selection**
 
@@ -112,7 +113,7 @@ Before generation starts, a trie of valid token sequences is built for every pos
 function name (plus `"no function was found"`). This is done by encoding each candidate
 name with the LLM's own tokenizer and recording the resulting token-ID paths.
 
-<img src="assets/trie.svg" alt="Function Name Trie — Token Paths" width="800"/>
+<img width="2500" height="906" alt="trie" src="https://github.com/user-attachments/assets/a06bf351-9989-47fe-ac61-accb9d8fe509" />
 
 At each generation step during Phase 1, only the token IDs that are valid continuations
 in the trie are kept; all others are masked to `-inf`. Once the trie path is exhausted,
